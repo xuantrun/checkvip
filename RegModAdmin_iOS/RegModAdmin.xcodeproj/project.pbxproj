@@ -1,0 +1,322 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		12000001 /* RegModAdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22000001 /* RegModAdminApp.swift */; };
+		12000002 /* AdminAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22000002 /* AdminAPIService.swift */; };
+		12000003 /* AdminLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22000003 /* AdminLoginView.swift */; };
+		12000004 /* AdminDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22000004 /* AdminDashboardView.swift */; };
+		12000005 /* AdminUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22000005 /* AdminUsersView.swift */; };
+		12000006 /* AdminBlacklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22000006 /* AdminBlacklistView.swift */; };
+		12000007 /* AdminLogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22000007 /* AdminLogsView.swift */; };
+		12000008 /* game_cover_fft.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22000008 /* game_cover_fft.jpg */; };
+		12000009 /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 22000009 /* AppIcon.png */; };
+		12000010 /* AppIcon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 22000010 /* AppIcon1024.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		02000001 /* RegModAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegModAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		22000001 /* RegModAdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegModAdminApp.swift; sourceTree = "<group>"; };
+		22000002 /* AdminAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAPIService.swift; sourceTree = "<group>"; };
+		22000003 /* AdminLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLoginView.swift; sourceTree = "<group>"; };
+		22000004 /* AdminDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardView.swift; sourceTree = "<group>"; };
+		22000005 /* AdminUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminUsersView.swift; sourceTree = "<group>"; };
+		22000006 /* AdminBlacklistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminBlacklistView.swift; sourceTree = "<group>"; };
+		22000007 /* AdminLogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLogsView.swift; sourceTree = "<group>"; };
+		22000008 /* game_cover_fft.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = game_cover_fft.jpg; sourceTree = "<group>"; };
+		22000009 /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
+		22000010 /* AppIcon1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon1024.png; sourceTree = "<group>"; };
+		22000011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		02000009 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		02000005 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				02000020 /* RegModAdmin */,
+				02000006 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		02000006 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02000001 /* RegModAdmin.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02000020 /* RegModAdmin */ = {
+			isa = PBXGroup;
+			children = (
+				02000021 /* App */,
+				02000022 /* Services */,
+				02000023 /* Views */,
+				02000024 /* Resources */,
+			);
+			path = RegModAdmin;
+			sourceTree = "<group>";
+		};
+		02000021 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				22000001 /* RegModAdminApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		02000022 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				22000002 /* AdminAPIService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		02000023 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				22000003 /* AdminLoginView.swift */,
+				22000004 /* AdminDashboardView.swift */,
+				22000005 /* AdminUsersView.swift */,
+				22000006 /* AdminBlacklistView.swift */,
+				22000007 /* AdminLogsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		02000024 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				22000011 /* Info.plist */,
+				22000008 /* game_cover_fft.jpg */,
+				22000009 /* AppIcon.png */,
+				22000010 /* AppIcon1024.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		02000010 /* RegModAdmin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02000003 /* Build configuration list for PBXNativeTarget "RegModAdmin" */;
+			buildPhases = (
+				02000007 /* Sources */,
+				02000009 /* Frameworks */,
+				02000008 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RegModAdmin;
+			productName = RegModAdmin;
+			productReference = 02000001 /* RegModAdmin.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		02000004 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					02000010 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 02000002 /* Build configuration list for PBXProject "RegModAdmin" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 02000005 /* Root */;
+			productRefGroup = 02000006 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				02000010 /* RegModAdmin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		02000008 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				12000008 /* game_cover_fft.jpg in Resources */,
+				12000009 /* AppIcon.png in Resources */,
+				12000010 /* AppIcon1024.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		02000007 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				12000001 /* RegModAdminApp.swift in Sources */,
+				12000002 /* AdminAPIService.swift in Sources */,
+				12000003 /* AdminLoginView.swift in Sources */,
+				12000004 /* AdminDashboardView.swift in Sources */,
+				12000005 /* AdminUsersView.swift in Sources */,
+				12000006 /* AdminBlacklistView.swift in Sources */,
+				12000007 /* AdminLogsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		32000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		32000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		32000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RegModAdmin/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flork.regmod.admin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		32000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RegModAdmin/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flork.regmod.admin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		02000002 /* Build configuration list for PBXProject "RegModAdmin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32000001 /* Debug */,
+				32000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		02000003 /* Build configuration list for PBXNativeTarget "RegModAdmin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32000003 /* Debug */,
+				32000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 02000004 /* Project object */;
+}

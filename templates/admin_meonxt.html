@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REG MOD - Trung Tâm Quản Trị Hệ Thống (MEONXT)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #07090e;
+            --bg-card: rgba(18, 22, 34, 0.85);
+            --border: rgba(255, 255, 255, 0.08);
+            --primary: #00f2fe;
+            --primary-glow: rgba(0, 242, 254, 0.25);
+            --danger: #ef4444;
+            --danger-glow: rgba(239, 68, 68, 0.25);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+        }
+
+        /* LOGIN OVERLAY */
+        #loginOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 6, 12, 0.95);
+            backdrop-filter: blur(16px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px var(--primary-glow);
+            text-align: center;
+        }
+
+        .login-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(0, 242, 254, 0.12);
+            color: var(--primary);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+
+        .login-card h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="password"], input[type="text"] {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 0.92rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        input[type="password"]:focus, input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #04060c;
+            width: 100%;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+        }
+
+        /* MAIN DASHBOARD */
+        .admin-nav {
+            background: rgba(14, 18, 28, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-tag {
+            background: linear-gradient(135deg, #00f2fe, #a855f7);
+            color: #04060c;
+            font-weight: 900;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .brand-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .badge-online {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            padding: 4px 10px;
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success);
+            border-radius: 999px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .dot-green {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            border-radius: 8px;
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .btn-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fcd34d;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-warning:hover {
+            background: var(--warning);
+            color: #000;
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 28px 24px;
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .stat-card.danger::after { background: var(--danger); }
+        .stat-card.purple::after { background: #a855f7; }
+        .stat-card.success::after { background: var(--success); }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .stat-val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* SECTIONS */
+        .dashboard-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 28px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* TABLE */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.86rem;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 16px;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #e2e8f0;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-blocked {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-vip {
+            background: rgba(234, 179, 8, 0.2);
+            color: #facc15;
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 800;
+        }
+
+        .badge-vip2 {
+            background: rgba(168, 85, 247, 0.25);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 800;
+        }
+
+        .badge-free {
+            background: rgba(148, 163, 184, 0.15);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .btn-xs {
+            padding: 4px 8px;
+            font-size: 0.72rem;
+            border-radius: 6px;
+        }
+
+        /* HWID BLOCK FORM */
+        .block-hwid-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .block-hwid-box input {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        /* TOAST */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: rgba(18, 24, 38, 0.95);
+            border: 1px solid var(--primary);
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            display: none;
+            z-index: 10000;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN MODAL -->
+    <div id="loginOverlay">
+        <div class="login-card">
+            <span class="login-badge">BẢO MẬT MÁY CHỦ VPS</span>
+            <h2>Xác Thực MEONXT</h2>
+            <p>Vui lòng nhập mật khẩu quản trị viên để tiếp tục</p>
+            
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label>Mật Khẩu Quản Trị</label>
+                    <input type="password" id="adminPassword" placeholder="Nhập mật mã quản trị viên..." autofocus required>
+                </div>
+                <button type="submit" class="btn btn-primary">XÁC MINH DANH TÍNH</button>
+            </form>
+            <div id="loginErr" style="color: var(--danger); font-size: 0.82rem; margin-top: 12px; display: none;"></div>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
+    <header class="admin-nav">
+        <div class="brand-box">
+            <span class="brand-tag">MEONXT v2.0</span>
+            <span class="brand-title">REG MOD CONTROLLER</span>
+        </div>
+        <div class="nav-actions">
+            <div class="badge-online">
+                <span class="dot-green"></span>
+                <span>VPS 103.238.234.204 : 5678</span>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="loadDashboardData()">Làm Mới</button>
+            <button class="btn btn-danger btn-sm" onclick="handleLogout()">Đăng Xuất</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- STATS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Tổng Tài Khoản Đăng Ký</div>
+                <div class="stat-val" id="statTotalUsers">0</div>
+            </div>
+            <div class="stat-card danger">
+                <div class="stat-label">Thiết Bị HWID Bị Chặn</div>
+                <div class="stat-val" id="statBlockedHwids">0</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-label">API Keys Đang Hoạt Động</div>
+                <div class="stat-val" id="statActiveKeys">0</div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-label">Trạng Thái Hệ Thống</div>
+                <div class="stat-val" style="color: var(--success); font-size: 1.4rem;">ONLINE</div>
+            </div>
+            <div class="stat-card" id="freeCacheCard" style="border: 1px solid rgba(0, 242, 254, 0.3);">
+                <div class="stat-label" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>TẠO CACHE FREE (ON / OFF)</span>
+                    <span id="freeCacheBadge" style="font-size: 0.72rem; padding: 2px 8px; border-radius: 999px; background: rgba(16, 185, 129, 0.2); color: #10b981; font-weight: 700;">BẬT</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+                    <div class="stat-val" id="statFreeCacheText" style="font-size: 1.15rem; color: #10b981;">CHO PHÉP FREE</div>
+                    <button id="btnToggleFreeCache" class="btn btn-danger btn-sm" onclick="toggleFreeCacheServer()" style="font-size: 0.8rem; padding: 6px 14px;">
+                        🔒 ĐÓNG FREE CACHE
+                    </button>
+                </div>
+                <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 6px;" id="freeCacheNote">
+                    Khi đóng: User Free không thể Make Cache (chỉ VIP mới được make).
+                </div>
+            </div>
+        </div>
+
+        <!-- USERS TABLE -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span>DANH SÁCH TÀI KHOẢN NGƯỜI DÙNG</span>
+                </div>
+                <input type="text" id="userSearch" placeholder="Tìm theo tên hoặc HWID..." oninput="filterUsers()" style="max-width: 280px;">
+            </div>
+
+            <!-- ADD USER FORM -->
+            <div class="block-hwid-box" style="margin-bottom: 16px; background: rgba(255,255,255,0.02); padding: 14px; border-radius: 12px; border: 1px solid var(--border);">
+                <input type="text" id="newUsernameInput" placeholder="Tên đăng nhập mới (tối thiểu 3 ký tự)..." style="max-width: 210px;">
+                <input type="password" id="newPasswordInput" placeholder="Mật khẩu..." style="max-width: 150px;">
+                <select id="newRoleSelect" style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; color: #fff; outline: none;">
+                    <option value="0" style="background: #111;">0: Free (Mặc Định - Dùng Cache)</option>
+                    <option value="1" style="background: #111;">1: Cấp VIP 1 (Dùng Shader + Cache)</option>
+                    <option value="2" style="background: #111;">2: Cấp VIP 2 (Full Make Avatar + Shader + Cache)</option>
+                </select>
+                <input type="text" id="newHwidOptional" placeholder="Mã HWID (tùy chọn)..." style="max-width: 230px;">
+                <button class="btn btn-primary" onclick="submitAddNewUser()">+ TẠO TÀI KHOẢN</button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tài Khoản</th>
+                            <th>Quyền Hạn</th>
+                            <th>HWID Thiết Bị</th>
+                            <th>API Key Cấp Cho App</th>
+                            <th>Trạng Thái</th>
+                            <th>Đăng Ký Lúc</th>
+                            <th>Lần Cuối</th>
+                            <th>Hành Động Quản Trị</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Đang tải dữ liệu...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- HWID BLACKLIST -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span>QUẢN LÝ CHẶN THIẾT BỊ (HWID BLACKLIST)</span>
+                </div>
+            </div>
+
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px;">
+                Khi một HWID bị đưa vào danh sách này, thiết bị tương ứng (iPhone/PC) sẽ <strong>bị cấm tuyệt đối</strong> không thể mở ứng dụng và không thể tạo Cache/Shader.
+            </p>
+
+            <div class="block-hwid-box">
+                <input type="text" id="newHwidInput" placeholder="Nhập mã HWID thiết bị (ví dụ: 1B74C935-4FD5-4A92-...)">
+                <input type="text" id="newHwidReason" placeholder="Lý do chặn (tùy chọn)" style="max-width: 260px;">
+                <button class="btn btn-danger" onclick="submitBlockHwid()">CHẶN THIẾT BỊ NÀY</button>
+            </div>
+
+            <div class="table-wrapper" style="margin-top: 20px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã HWID Thiết Bị</th>
+                            <th>Lý Do Chặn</th>
+                            <th>Thời Gian Chặn</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="blacklistTableBody">
+                        <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Chưa có thiết bị nào bị chặn.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- AUDIT LOGS -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span>NHẬT KÝ ĐĂNG NHẬP GẦN ĐÂY</span>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Thời Gian</th>
+                            <th>Tài Khoản</th>
+                            <th>HWID</th>
+                            <th>Địa Chỉ IP</th>
+                            <th>Kết Quả</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logsTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast"></div>
+
+    <script>
+        let allUsers = [];
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(() => { t.style.display = 'none'; }, 3500);
+        }
+
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('adminPassword').value;
+            const err = document.getElementById('loginErr');
+            err.style.display = 'none';
+
+            try {
+                const res = await fetch('/meonxt/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: pass })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    sessionStorage.setItem('meonxt_auth', 'true');
+                    document.getElementById('loginOverlay').style.display = 'none';
+                    loadDashboardData();
+                } else {
+                    err.innerText = data.error || 'Sai mật khẩu quản trị!';
+                    err.style.display = 'block';
+                }
+            } catch (ex) {
+                err.innerText = 'Lỗi kết nối tới máy chủ: ' + ex.message;
+                err.style.display = 'block';
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('meonxt_auth');
+            fetch('/meonxt/logout', { method: 'POST' });
+            document.getElementById('loginOverlay').style.display = 'flex';
+        }
+
+        // Auto check session
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('meonxt_auth') === 'true') {
+                document.getElementById('loginOverlay').style.display = 'none';
+                loadDashboardData();
+            }
+        });
+
+        async function loadDashboardData() {
+            try {
+                const res = await fetch('/meonxt/api/data');
+                if (res.status === 401) {
+                    handleLogout();
+                    return;
+                }
+                const data = await res.json();
+                if (data.success) {
+                    allUsers = data.users || [];
+                    renderUsers(allUsers);
+                    renderBlacklist(data.blacklist || []);
+                    renderLogs(data.logs || []);
+
+                    document.getElementById('statTotalUsers').innerText = allUsers.length;
+                    document.getElementById('statBlockedHwids').innerText = (data.blacklist || []).length;
+                    document.getElementById('statActiveKeys').innerText = (data.active_keys_count || allUsers.length);
+                    updateFreeCacheUI(data.free_cache_enabled !== false);
+                }
+            } catch (e) {
+                console.error('Failed to load data:', e);
+            }
+        }
+
+        let currentFreeCacheEnabled = true;
+
+        function updateFreeCacheUI(enabled) {
+            currentFreeCacheEnabled = enabled;
+            const badge = document.getElementById('freeCacheBadge');
+            const text = document.getElementById('statFreeCacheText');
+            const btn = document.getElementById('btnToggleFreeCache');
+            const card = document.getElementById('freeCacheCard');
+            if (!badge || !text || !btn || !card) return;
+
+            if (enabled) {
+                badge.innerText = 'BẬT';
+                badge.style.background = 'rgba(16, 185, 129, 0.2)';
+                badge.style.color = '#10b981';
+                text.innerText = 'CHO PHÉP FREE';
+                text.style.color = '#10b981';
+                btn.innerText = '🔒 ĐÓNG FREE CACHE';
+                btn.className = 'btn btn-danger btn-sm';
+                card.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+            } else {
+                badge.innerText = 'ĐÃ ĐÓNG';
+                badge.style.background = 'rgba(239, 68, 68, 0.2)';
+                badge.style.color = '#ef4444';
+                text.innerText = 'CHỈ DÀNH CHO VIP';
+                text.style.color = '#ef4444';
+                btn.innerText = '🔓 MỞ FREE CACHE';
+                btn.className = 'btn btn-primary btn-sm';
+                card.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+            }
+        }
+
+        async function toggleFreeCacheServer() {
+            const newState = !currentFreeCacheEnabled;
+            const confirmMsg = newState 
+                ? 'Bạn có chắc muốn MỞ tính năng Tạo Cache cho người dùng Free?' 
+                : 'Bạn có chắc muốn ĐÓNG tính năng Tạo Cache Free? (Tài khoản Free sẽ KHÔNG THỂ make cache nữa, chỉ tài khoản VIP mới được tạo)';
+            if (!confirm(confirmMsg)) return;
+
+            try {
+                const res = await fetch('/meonxt/api/toggle_free_cache', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled: newState })
+                });
+                const d = await res.json();
+                if (d.success) {
+                    updateFreeCacheUI(d.free_cache_enabled);
+                    showToast(d.free_cache_enabled ? 'Đã MỞ Tạo Cache Miễn Phí!' : 'Đã ĐÓNG Tạo Cache Miễn Phí (Chỉ VIP mới được make)!');
+                } else {
+                    alert(d.error || 'Lỗi thao tác máy chủ');
+                }
+            } catch (e) {
+                alert('Lỗi kết nối tới máy chủ: ' + e.message);
+            }
+        }
+
+        function renderUsers(users) {
+            const tb = document.getElementById('userTableBody');
+            if (!users.length) {
+                tb.innerHTML = '<tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Chưa có người dùng nào đăng ký.</td></tr>';
+                return;
+            }
+
+            tb.innerHTML = users.map(u => {
+                const isBlocked = u.is_blocked === 1;
+                const role = parseInt(u.role) || 0;
+                let roleBadgeHtml = '';
+                if (role >= 2) {
+                    roleBadgeHtml = '<span class="badge-vip2">👑 VIP 2 (FULL AVATAR)</span>';
+                } else if (role === 1) {
+                    roleBadgeHtml = '<span class="badge-vip">⭐ VIP 1 (SHADER)</span>';
+                } else {
+                    roleBadgeHtml = '<span class="badge-free">🛡️ FREE (Cấp 0)</span>';
+                }
+
+                const hwidHtml = u.hwid ? `
+                    <span class="mono">${escapeHtml(u.hwid)}</span>
+                    <button class="btn btn-ghost btn-xs" onclick="copyText('${escapeHtml(u.hwid)}')" style="margin-left: 6px; color: var(--primary);" title="Copy HWID">📋 Copy</button>
+                ` : '<span style="color: var(--text-muted);">Chưa gắn</span>';
+                return `
+                    <tr>
+                        <td class="mono">#${u.id}</td>
+                        <td><strong>${escapeHtml(u.username)}</strong></td>
+                        <td>${roleBadgeHtml}</td>
+                        <td>${hwidHtml}</td>
+                        <td class="mono">${escapeHtml(u.api_key || 'Chưa cấp')}</td>
+                        <td>
+                            <span class="badge-status ${isBlocked ? 'status-blocked' : 'status-active'}">
+                                ${isBlocked ? 'ĐÃ KHÓA' : 'HOẠT ĐỘNG'}
+                            </span>
+                        </td>
+                        <td style="font-size: 0.78rem; color: var(--text-muted);">${u.created_at || '-'}</td>
+                        <td style="font-size: 0.78rem; color: var(--text-muted);">${u.last_login || '-'}</td>
+                        <td>
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                ${role === 0 ? `
+                                    <button class="btn btn-primary btn-sm" onclick="setRoleUser('${escapeHtml(u.username)}', 1)">
+                                        ⭐ Cấp VIP 1
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" style="background: #a855f7;" onclick="setRoleUser('${escapeHtml(u.username)}', 2)">
+                                        👑 Cấp VIP 2
+                                    </button>
+                                ` : (role === 1 ? `
+                                    <button class="btn btn-primary btn-sm" style="background: #a855f7;" onclick="setRoleUser('${escapeHtml(u.username)}', 2)">
+                                        👑 Lên VIP 2
+                                    </button>
+                                    <button class="btn btn-ghost btn-sm" onclick="setRoleUser('${escapeHtml(u.username)}', 0)">
+                                        Hạ Free
+                                    </button>
+                                ` : `
+                                    <button class="btn btn-ghost btn-sm" style="color: #facc15;" onclick="setRoleUser('${escapeHtml(u.username)}', 1)">
+                                        Hạ VIP 1
+                                    </button>
+                                    <button class="btn btn-ghost btn-sm" onclick="setRoleUser('${escapeHtml(u.username)}', 0)">
+                                        Hạ Free
+                                    </button>
+                                `)}
+                                <button class="btn ${isBlocked ? 'btn-ghost' : 'btn-warning'} btn-sm" onclick="toggleBlockUser('${escapeHtml(u.username)}')">
+                                    ${isBlocked ? 'Mở Khóa' : 'Khóa Nick'}
+                                </button>
+                                ${u.hwid ? `
+                                    <button class="btn btn-danger btn-sm" onclick="quickBlockHwid('${escapeHtml(u.hwid)}')">
+                                        Chặn HWID
+                                    </button>
+                                ` : ''}
+                                <button class="btn btn-ghost btn-sm" onclick="deleteUser('${escapeHtml(u.username)}')" style="color: #ef4444;">
+                                    Xóa
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderBlacklist(list) {
+            const tb = document.getElementById('blacklistTableBody');
+            if (!list.length) {
+                tb.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Danh sách trắng, chưa chặn thiết bị nào.</td></tr>';
+                return;
+            }
+
+            tb.innerHTML = list.map(item => `
+                <tr>
+                    <td class="mono" style="color: #ef4444; font-weight: 600;">
+                        ${escapeHtml(item.hwid)}
+                        <button class="btn btn-ghost btn-xs" onclick="copyText('${escapeHtml(item.hwid)}')" style="margin-left: 6px; color: var(--primary);" title="Copy HWID">📋 Copy</button>
+                    </td>
+                    <td>${escapeHtml(item.reason || 'Chặn bởi Admin')}</td>
+                    <td style="font-size: 0.78rem; color: var(--text-muted);">${item.blocked_at || '-'}</td>
+                    <td>
+                        <button class="btn btn-ghost btn-sm" onclick="unblockHwid('${escapeHtml(item.hwid)}')" style="color: #10b981;">
+                            Gỡ Chặn (Unblock)
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderLogs(logs) {
+            const tb = document.getElementById('logsTableBody');
+            if (!logs.length) {
+                tb.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Chưa có nhật ký ghi nhận.</td></tr>';
+                return;
+            }
+
+            tb.innerHTML = logs.map(l => `
+                <tr>
+                    <td style="font-size: 0.78rem; color: var(--text-muted);">${l.timestamp}</td>
+                    <td><strong>${escapeHtml(l.username || '-')}</strong></td>
+                    <td class="mono">
+                        ${escapeHtml(l.hwid || '-')}
+                        ${l.hwid ? `<button class="btn btn-ghost btn-xs" onclick="copyText('${escapeHtml(l.hwid)}')" style="margin-left: 4px; color: var(--primary);" title="Copy HWID">📋</button>` : ''}
+                    </td>
+                    <td class="mono">${escapeHtml(l.ip || '-')}</td>
+                    <td>
+                        <span class="badge-status ${l.status.includes('SUCCESS') ? 'status-active' : 'status-blocked'}">
+                            ${escapeHtml(l.status)}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function copyText(text) {
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Đã sao chép HWID: ' + text);
+            }).catch(() => {
+                const el = document.createElement('textarea');
+                el.value = text;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                showToast('Đã sao chép HWID: ' + text);
+            });
+        }
+
+        async function setRoleUser(username, role) {
+            const roleName = role === 2 ? 'VIP 2 (Full Make Avatar + Shader + Cache)' : (role === 1 ? 'VIP 1 (Shader + Cache)' : 'Free (Cache)');
+            if (!confirm(`Bạn có chắc muốn cấp quyền "${roleName}" cho tài khoản "${username}"?`)) return;
+            const res = await fetch('/meonxt/api/set_role', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, role })
+            });
+            const d = await res.json();
+            if (d.success) {
+                showToast(`Đã đổi quyền của ${username} thành ${roleName}`);
+                loadDashboardData();
+            } else {
+                alert(d.error || 'Lỗi cập nhật quyền');
+            }
+        }
+
+        async function submitAddNewUser() {
+            const u = document.getElementById('newUsernameInput').value.trim();
+            const p = document.getElementById('newPasswordInput').value.trim();
+            const r = parseInt(document.getElementById('newRoleSelect').value) || 0;
+            const h = document.getElementById('newHwidOptional').value.trim();
+            if (!u || !p) {
+                alert('Vui lòng nhập tên đăng nhập và mật khẩu!');
+                return;
+            }
+            const res = await fetch('/meonxt/api/add_user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: u, password: p, role: r, hwid: h })
+            });
+            const d = await res.json();
+            if (d.success) {
+                document.getElementById('newUsernameInput').value = '';
+                document.getElementById('newPasswordInput').value = '';
+                document.getElementById('newHwidOptional').value = '';
+                showToast(`Đã tạo thành công tài khoản "${u}" (${r === 1 ? 'VIP' : 'Free'})!`);
+                loadDashboardData();
+            } else {
+                alert(d.error || 'Lỗi tạo tài khoản');
+            }
+        }
+
+        function filterUsers() {
+            const q = document.getElementById('userSearch').value.toLowerCase().trim();
+            if (!q) {
+                renderUsers(allUsers);
+                return;
+            }
+            const filtered = allUsers.filter(u => 
+                u.username.toLowerCase().includes(q) || 
+                (u.hwid && u.hwid.toLowerCase().includes(q)) ||
+                (u.api_key && u.api_key.toLowerCase().includes(q))
+            );
+            renderUsers(filtered);
+        }
+
+        async function toggleBlockUser(username) {
+            if (!confirm(`Bạn có chắc muốn đổi trạng thái khóa/mở cho người dùng "${username}"?`)) return;
+            const res = await fetch('/meonxt/api/toggle_user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username })
+            });
+            const d = await res.json();
+            if (d.success) {
+                showToast(`Đã đổi trạng thái của ${username}`);
+                loadDashboardData();
+            } else {
+                alert(d.error);
+            }
+        }
+
+        async function deleteUser(username) {
+            if (!confirm(`XÓA VĨNH VIỄN tài khoản "${username}"? Không thể khôi phục!`)) return;
+            const res = await fetch('/meonxt/api/delete_user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username })
+            });
+            const d = await res.json();
+            if (d.success) {
+                showToast(`Đã xóa người dùng ${username}`);
+                loadDashboardData();
+            } else {
+                alert(d.error);
+            }
+        }
+
+        async function submitBlockHwid() {
+            const hwid = document.getElementById('newHwidInput').value.trim();
+            const reason = document.getElementById('newHwidReason').value.trim();
+            if (!hwid) {
+                alert('Vui lòng nhập mã HWID!');
+                return;
+            }
+            const res = await fetch('/meonxt/api/block_hwid', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ hwid, reason: reason || 'Chặn thủ công qua Admin Panel' })
+            });
+            const d = await res.json();
+            if (d.success) {
+                document.getElementById('newHwidInput').value = '';
+                document.getElementById('newHwidReason').value = '';
+                showToast(`Đã khóa thiết bị HWID: ${hwid}`);
+                loadDashboardData();
+            } else {
+                alert(d.error);
+            }
+        }
+
+        async function quickBlockHwid(hwid) {
+            if (!confirm(`Khóa HWID ${hwid}? Người dùng thiết bị này sẽ bị ngắt kết nối khỏi app!`)) return;
+            const res = await fetch('/meonxt/api/block_hwid', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ hwid, reason: 'Khóa nhanh từ danh sách tài khoản' })
+            });
+            const d = await res.json();
+            if (d.success) {
+                showToast(`Đã chặn HWID ${hwid}`);
+                loadDashboardData();
+            } else {
+                alert(d.error);
+            }
+        }
+
+        async function unblockHwid(hwid) {
+            if (!confirm(`Gỡ chặn cho thiết bị HWID ${hwid}?`)) return;
+            const res = await fetch('/meonxt/api/unblock_hwid', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ hwid })
+            });
+            const d = await res.json();
+            if (d.success) {
+                showToast(`Đã gỡ chặn HWID: ${hwid}`);
+                loadDashboardData();
+            } else {
+                alert(d.error);
+            }
+        }
+
+        function escapeHtml(s) {
+            if (!s) return '';
+            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+</html>

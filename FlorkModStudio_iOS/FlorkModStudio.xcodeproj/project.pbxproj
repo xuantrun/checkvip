@@ -1,0 +1,420 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		11000001 /* FlorkModStudioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000001 /* FlorkModStudioApp.swift */; };
+		11000002 /* ShaderModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000002 /* ShaderModels.swift */; };
+		11000003 /* HitboxModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000003 /* HitboxModels.swift */; };
+		11000005 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000005 /* APIService.swift */; };
+		11000006 /* GameInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000006 /* GameInjector.swift */; };
+		11000007 /* GunPreviewCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000007 /* GunPreviewCanvas.swift */; };
+		11000008 /* GunModView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000008 /* GunModView.swift */; };
+		11000009 /* HitboxModView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000009 /* HitboxModView.swift */; };
+		11000010 /* GameGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000010 /* GameGuideView.swift */; };
+		11000011 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000011 /* SettingsView.swift */; };
+		11000012 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000012 /* ContentView.swift */; };
+		11000013 /* cache_res in Resources */ = {isa = PBXBuildFile; fileRef = 21000013 /* cache_res.GkLlYqzsX4AtTdE55sDMRh9sJOI~3D */; };
+		11000014 /* HitboxPreviewCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000015 /* HitboxPreviewCanvas.swift */; };
+		11000015 /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21000016 /* AppIcon.png */; };
+		11000016 /* AppIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21000017 /* AppIcon@2x.png */; };
+		11000017 /* AppIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21000018 /* AppIcon@3x.png */; };
+		11000018 /* AppIcon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 21000019 /* AppIcon1024.png */; };
+		11000020 /* hitbox_mannequin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 21000020 /* hitbox_mannequin.jpg */; };
+		11000021 /* preset_headshot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 21000021 /* preset_headshot.jpg */; };
+		11000022 /* preset_magic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 21000022 /* preset_magic.jpg */; };
+		11000023 /* preset_body.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 21000023 /* preset_body.jpg */; };
+		11000024 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000024 /* LocalizationManager.swift */; };
+		11000025 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000025 /* ThemeManager.swift */; };
+		11000026 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000026 /* LoginView.swift */; };
+		11000030 /* game_cover_fft.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 21000030 /* game_cover_fft.jpg */; };
+		11000031 /* game_cover_ffm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 21000031 /* game_cover_ffm.jpg */; };
+		11000032 /* AuthorCreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000032 /* AuthorCreditsView.swift */; };
+		11000033 /* doraemon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21000033 /* doraemon.png */; };
+		11000034 /* admin_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 21000034 /* admin_avatar.png */; };
+		11000035 /* game_icon_fft.png in Resources */ = {isa = PBXBuildFile; fileRef = 21000035 /* game_icon_fft.png */; };
+		11000036 /* game_icon_ffm.png in Resources */ = {isa = PBXBuildFile; fileRef = 21000036 /* game_icon_ffm.png */; };
+		11000037 /* AntiHexProSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000037 /* AntiHexProSecurity.swift */; };
+		11000038 /* AvatarModView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000038 /* AvatarModView.swift */; };
+		11000039 /* AvatarPreviewCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21000039 /* AvatarPreviewCanvas.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		01000001 /* FlorkModStudio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlorkModStudio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		21000001 /* FlorkModStudioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlorkModStudioApp.swift; sourceTree = "<group>"; };
+		21000002 /* ShaderModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderModels.swift; sourceTree = "<group>"; };
+		21000003 /* HitboxModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitboxModels.swift; sourceTree = "<group>"; };
+		21000005 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		21000006 /* GameInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInjector.swift; sourceTree = "<group>"; };
+		21000007 /* GunPreviewCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GunPreviewCanvas.swift; sourceTree = "<group>"; };
+		21000008 /* GunModView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GunModView.swift; sourceTree = "<group>"; };
+		21000009 /* HitboxModView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitboxModView.swift; sourceTree = "<group>"; };
+		21000010 /* GameGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGuideView.swift; sourceTree = "<group>"; };
+		21000011 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		21000012 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		21000013 /* cache_res.GkLlYqzsX4AtTdE55sDMRh9sJOI~3D */ = {isa = PBXFileReference; lastKnownFileType = file; path = "cache_res.GkLlYqzsX4AtTdE55sDMRh9sJOI~3D"; sourceTree = "<group>"; };
+		21000014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21000015 /* HitboxPreviewCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitboxPreviewCanvas.swift; sourceTree = "<group>"; };
+		21000016 /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
+		21000017 /* AppIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon@2x.png"; sourceTree = "<group>"; };
+		21000018 /* AppIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon@3x.png"; sourceTree = "<group>"; };
+		21000019 /* AppIcon1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon1024.png; sourceTree = "<group>"; };
+		21000020 /* hitbox_mannequin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hitbox_mannequin.jpg; sourceTree = "<group>"; };
+		21000021 /* preset_headshot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = preset_headshot.jpg; sourceTree = "<group>"; };
+		21000022 /* preset_magic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = preset_magic.jpg; sourceTree = "<group>"; };
+		21000023 /* preset_body.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = preset_body.jpg; sourceTree = "<group>"; };
+		21000024 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
+		21000025 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		21000026 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		21000030 /* game_cover_fft.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = game_cover_fft.jpg; sourceTree = "<group>"; };
+		21000031 /* game_cover_ffm.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = game_cover_ffm.jpg; sourceTree = "<group>"; };
+		21000032 /* AuthorCreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorCreditsView.swift; sourceTree = "<group>"; };
+		21000033 /* doraemon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doraemon.png; sourceTree = "<group>"; };
+		21000034 /* admin_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = admin_avatar.png; sourceTree = "<group>"; };
+		21000035 /* game_icon_fft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game_icon_fft.png; sourceTree = "<group>"; };
+		21000036 /* game_icon_ffm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game_icon_ffm.png; sourceTree = "<group>"; };
+		21000037 /* AntiHexProSecurity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntiHexProSecurity.swift; sourceTree = "<group>"; };
+		21000038 /* AvatarModView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarModView.swift; sourceTree = "<group>"; };
+		21000039 /* AvatarPreviewCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPreviewCanvas.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		02000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03000001 = {
+			isa = PBXGroup;
+			children = (
+				03000002 /* FlorkModStudio */,
+				03000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		03000002 /* FlorkModStudio */ = {
+			isa = PBXGroup;
+			children = (
+				03000004 /* App */,
+				03000005 /* Models */,
+				03000006 /* Services */,
+				03000007 /* Views */,
+				03000008 /* Resources */,
+			);
+			path = FlorkModStudio;
+			sourceTree = "<group>";
+		};
+		03000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				01000001 /* FlorkModStudio.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		03000004 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				21000001 /* FlorkModStudioApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		03000005 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				21000002 /* ShaderModels.swift */,
+				21000003 /* HitboxModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		03000006 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				21000005 /* APIService.swift */,
+				21000006 /* GameInjector.swift */,
+				21000024 /* LocalizationManager.swift */,
+				21000025 /* ThemeManager.swift */,
+				21000037 /* AntiHexProSecurity.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		03000007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				21000012 /* ContentView.swift */,
+				21000007 /* GunPreviewCanvas.swift */,
+				21000008 /* GunModView.swift */,
+				21000009 /* HitboxModView.swift */,
+				21000010 /* GameGuideView.swift */,
+				21000011 /* SettingsView.swift */,
+				21000015 /* HitboxPreviewCanvas.swift */,
+				21000026 /* LoginView.swift */,
+				21000032 /* AuthorCreditsView.swift */,
+				21000038 /* AvatarModView.swift */,
+				21000039 /* AvatarPreviewCanvas.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		03000008 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				21000014 /* Info.plist */,
+				21000013 /* cache_res.GkLlYqzsX4AtTdE55sDMRh9sJOI~3D */,
+				21000016 /* AppIcon.png */,
+				21000017 /* AppIcon@2x.png */,
+				21000018 /* AppIcon@3x.png */,
+				21000019 /* AppIcon1024.png */,
+				21000020 /* hitbox_mannequin.jpg */,
+				21000030 /* game_cover_fft.jpg */,
+				21000031 /* game_cover_ffm.jpg */,
+				21000021 /* preset_headshot.jpg */,
+				21000022 /* preset_magic.jpg */,
+				21000023 /* preset_body.jpg */,
+				21000033 /* doraemon.png */,
+				21000034 /* admin_avatar.png */,
+				21000035 /* game_icon_fft.png */,
+				21000036 /* game_icon_ffm.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		04000001 /* FlorkModStudio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05000001 /* Build configuration list for PBXNativeTarget "FlorkModStudio" */;
+			buildPhases = (
+				06000001 /* Sources */,
+				02000001 /* Frameworks */,
+				07000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlorkModStudio;
+			productName = "Reg Mod";
+			productReference = 01000001 /* FlorkModStudio.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = 05000002 /* Build configuration list for PBXProject "FlorkModStudio" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 03000001;
+			productRefGroup = 03000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				04000001 /* FlorkModStudio */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		07000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11000013 /* cache_res in Resources */,
+				11000015 /* AppIcon.png in Resources */,
+				11000016 /* AppIcon@2x.png in Resources */,
+				11000017 /* AppIcon@3x.png in Resources */,
+				11000018 /* AppIcon1024.png in Resources */,
+				11000020 /* hitbox_mannequin.jpg in Resources */,
+				11000030 /* game_cover_fft.jpg in Resources */,
+				11000031 /* game_cover_ffm.jpg in Resources */,
+				11000021 /* preset_headshot.jpg in Resources */,
+				11000022 /* preset_magic.jpg in Resources */,
+				11000023 /* preset_body.jpg in Resources */,
+				11000033 /* doraemon.png in Resources */,
+				11000034 /* admin_avatar.png in Resources */,
+				11000035 /* game_icon_fft.png in Resources */,
+				11000036 /* game_icon_ffm.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		06000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11000001 /* FlorkModStudioApp.swift in Sources */,
+				11000002 /* ShaderModels.swift in Sources */,
+				11000003 /* HitboxModels.swift in Sources */,
+				11000005 /* APIService.swift in Sources */,
+				11000006 /* GameInjector.swift in Sources */,
+				11000007 /* GunPreviewCanvas.swift in Sources */,
+				11000008 /* GunModView.swift in Sources */,
+				11000009 /* HitboxModView.swift in Sources */,
+				11000010 /* GameGuideView.swift in Sources */,
+				11000011 /* SettingsView.swift in Sources */,
+				11000012 /* ContentView.swift in Sources */,
+				11000014 /* HitboxPreviewCanvas.swift in Sources */,
+				11000024 /* LocalizationManager.swift in Sources */,
+				11000025 /* ThemeManager.swift in Sources */,
+				11000026 /* LoginView.swift in Sources */,
+				11000032 /* AuthorCreditsView.swift in Sources */,
+				11000037 /* AntiHexProSecurity.swift in Sources */,
+				11000038 /* AvatarModView.swift in Sources */,
+				11000039 /* AvatarPreviewCanvas.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		09000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		09000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		09000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FlorkModStudio/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flork.modstudio;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		09000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FlorkModStudio/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl,-sectcreate,__RESTRICT,__restrict,/dev/null",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.flork.modstudio;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		05000001 /* Build configuration list for PBXNativeTarget "FlorkModStudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09000003 /* Debug */,
+				09000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05000002 /* Build configuration list for PBXProject "FlorkModStudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09000001 /* Debug */,
+				09000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08000001 /* Project object */;
+}

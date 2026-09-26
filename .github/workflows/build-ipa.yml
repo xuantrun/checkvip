@@ -1,0 +1,107 @@
+name: 🚀 Build Reg Mod IPAs (User & Admin)
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Phiên bản Release (ví dụ: v2.0.7)'
+        required: false
+        default: 'v2.0.7'
+
+jobs:
+  build-ipa:
+    name: 📱 Build Dual iOS Apps (.ipa)
+    runs-on: macos-14
+    permissions:
+      contents: write
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: ⚙️ Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.4'
+          
+      - name: 🔍 Kiểm tra các dự án Xcode
+        run: |
+          cd FlorkModStudio_iOS
+          xcodebuild -list -project FlorkModStudio.xcodeproj
+          cd ../RegModAdmin_iOS
+          xcodebuild -list -project RegModAdmin.xcodeproj
+          cd ..
+          
+      - name: 🔨 Biên dịch & Archive Reg Mod (User App)
+        run: |
+          cd FlorkModStudio_iOS
+          mkdir -p ../build
+          xcodebuild archive \
+            -project FlorkModStudio.xcodeproj \
+            -scheme FlorkModStudio \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath ../build/FlorkModStudio.xcarchive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES
+          cd ..
+          mkdir -p Payload
+          cp -r build/FlorkModStudio.xcarchive/Products/Applications/*.app Payload/
+          zip -r RegMod.ipa Payload
+          rm -rf Payload
+          ls -lh RegMod.ipa
+          
+      - name: 🔨 Biên dịch & Archive Reg Mod Admin (Admin App)
+        run: |
+          cd RegModAdmin_iOS
+          xcodebuild archive \
+            -project RegModAdmin.xcodeproj \
+            -scheme RegModAdmin \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath ../build/RegModAdmin.xcarchive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES
+          cd ..
+          mkdir -p Payload
+          cp -r build/RegModAdmin.xcarchive/Products/Applications/*.app Payload/
+          zip -r RegMod_Admin.ipa Payload
+          rm -rf Payload
+          ls -lh RegMod_Admin.ipa
+          
+      - name: 📤 Tải User IPA lên Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: RegMod-User-IPA
+          path: RegMod.ipa
+          retention-days: 30
+
+      - name: 📤 Tải Admin IPA lên Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: RegMod-Admin-IPA
+          path: RegMod_Admin.ipa
+          retention-days: 30
+          
+      - name: 🚀 Tạo GitHub Release và Đính Kèm Cả 2 File .IPA
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: 'ui-build-${{ github.run_number }}'
+          name: 'Studio UI build ${{ github.run_number }}'
+          body: |
+            Updated welcome screen, floating login inputs, startup retry and admin dashboard.
+            Includes User and Admin IPAs. These unsigned packages require a compatible installation/signing method.
+          files: |
+            RegMod.ipa
+            RegMod_Admin.ipa
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

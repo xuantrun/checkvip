@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flork Mod Studio - Mod Súng & Hitbox Free Fire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="app-background"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="container">
+        <!-- HEADER & NAVBAR -->
+        <header class="navbar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5"
+                        fill="none">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>REG MOD STUDIO</h1>
+                    <p class="subtitle" id="locSubtitle">Hệ Thống Tùy Biến Free Fire Chuyên Nghiệp</p>
+                </div>
+            </div>
+
+            <!-- TOP CONTROLS: THEME, LANG, AUTH -->
+            <div class="nav-controls-row">
+                <button class="theme-switch-btn" onclick="cycleTheme()" id="btnTheme">
+                    <span id="themeIcon">🌑</span>
+                    <span id="themeText">Tối</span>
+                </button>
+                <button class="lang-switch-btn" onclick="toggleLanguage()" id="btnLang">
+                    <span>🌐</span>
+                    <span id="langText">VN</span>
+                </button>
+                <button class="auth-btn" onclick="openAuthModal()" id="btnAuthHeader">
+                    <span id="authHeaderIcon">👤</span>
+                    <span id="authHeaderText">Đăng Nhập</span>
+                </button>
+                <a href="/meonxt" target="_blank" class="theme-switch-btn"
+                    style="text-decoration: none; color: #38bdf8;">
+                    <span>🛡️</span>
+                    <span>MEONXT</span>
+                </a>
+            </div>
+
+            <!-- MAIN TAB NAVIGATION (CLEAN TYPOGRAPHY, NO EMOJI CLUTTER) -->
+            <nav class="module-switcher">
+                <button class="mod-btn active" id="btnModDV" onclick="switchModule('dv')">
+                    MOD MÀU SÚNG
+                </button>
+                <button class="mod-btn" id="btnModHitbox" onclick="switchModule('hitbox')">
+                    MOD HITBOX & ĐẠN
+                </button>
+                <button class="mod-btn" id="btnModAvatar" onclick="switchModule('avatar')">
+                    MAKE AVATAR NEW
+                </button>
+                <button class="mod-btn" id="btnModGuide" onclick="switchModule('guide')">
+                    HƯỚNG DẪN CÀI
+                </button>
+            </nav>
+        </header>
+
+        <!-- =========================================================================
+             TAB 1: MOD MÀU SÚNG (DÂY VÀNG 2 MÀU - CHUẨN 100% ẢNH CHỤP)
+        ========================================================================= -->
+        <div id="moduleDV" class="main-grid">
+
+            <!-- LEFT PANEL: CONTROLS -->
+            <div class="left-panel">
+
+                <!-- BƯỚC 1: CHỌN GAME -->
+                <section class="card glass-panel">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="step-num">1</span>
+                            <h2>Chọn Game Bạn Đang Chơi</h2>
+                        </div>
+                        <span class="badge badge-accent">Bước 1</span>
+                    </div>
+
+                    <div class="dv-version-grid">
+                        <div class="dv-card active" id="cardVerFFT" onclick="selectDVVersion('fft')">
+                            <div class="dv-top">
+                                <strong>⚡ Free Fire Thường</strong>
+                                <span class="badge badge-accent">Khuyên Dùng</span>
+                            </div>
+                            <p class="dv-desc-sub">Bản game tiêu chuẩn, nhẹ, mượt mà</p>
+                            <div class="dv-specs">
+                                <span>File mod: <b>13.18 MB</b></span>
+                                <span class="status-pill status-ready">✓ Sẵn sàng</span>
+                            </div>
+                        </div>
+
+                        <div class="dv-card" id="cardVerFFM" onclick="selectDVVersion('ffm')">
+                            <div class="dv-top">
+                                <strong>🔥 Free Fire MAX</strong>
+                                <span class="badge badge-success">Bản HD</span>
+                            </div>
+                            <p class="dv-desc-sub">Bản đồ họa cao cấp MAX Graphics</p>
+                            <div class="dv-specs">
+                                <span>File mod: <b>13.18 MB</b></span>
+                                <span class="status-pill status-ready">✓ Sẵn sàng</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BƯỚC 2: PHỐI MÀU SÚNG & PHÔNG NỀN -->
+                <section class="card glass-panel">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="step-num">2</span>
+                            <h2>Chọn Màu Súng & Mảng Nền</h2>
+                        </div>
+                        <span class="badge badge-purple">2 Màu Chuẩn Ảnh</span>
+                    </div>
+
+                    <!-- PRESET COLOR CHIPS (1-TAP COMBOS) -->
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span style="font-weight: 700; color: #38bdf8;">🔥 Phối Màu Hot Nhất (1-Chạm Ăn Ngay)</span>
+                            <span class="badge badge-accent">Nhanh & Tiện</span>
+                        </div>
+                        <div class="combo-colors-grid">
+                            <button class="combo-chip active"
+                                onclick="applyDualColor('#ffff00', '#ffffff', 'Chuẩn Trong Ảnh (Súng Vàng + Nền Trắng)')">
+                                <span class="combo-dots"><span style="background:#ffff00;"></span><span
+                                        style="background:#ffffff;"></span></span>
+                                <span>⭐ Chuẩn Trong Ảnh (Vàng + Trắng)</span>
+                            </button>
+                            <button class="combo-chip"
+                                onclick="applyDualColor('#ff0033', '#ffffff', 'Lửa Rực (Súng Đỏ + Nền Trắng)')">
+                                <span class="combo-dots"><span style="background:#ff0033;"></span><span
+                                        style="background:#ffffff;"></span></span>
+                                <span>🔴 Súng Đỏ + Nền Trắng</span>
+                            </button>
+                            <button class="combo-chip"
+                                onclick="applyDualColor('#00f2fe', '#ffffff', 'Cyber Neon (Súng Xanh + Nền Trắng)')">
+                                <span class="combo-dots"><span style="background:#00f2fe;"></span><span
+                                        style="background:#ffffff;"></span></span>
+                                <span>🩵 Súng Xanh + Nền Trắng</span>
+                            </button>
+                            <button class="combo-chip"
+                                onclick="applyDualColor('#00ff66', '#ffffff', 'Toxic (Súng Xanh Lá + Nền Trắng)')">
+                                <span class="combo-dots"><span style="background:#00ff66;"></span><span
+                                        style="background:#ffffff;"></span></span>
+                                <span>🟢 Súng Xanh Lá + Nền Trắng</span>
+                            </button>
+                            <button class="combo-chip"
+                                onclick="applyDualColor('#b026ff', '#ffffff', 'Huyền Bí (Súng Tím + Nền Trắng)')">
+                                <span class="combo-dots"><span style="background:#b026ff;"></span><span
+                                        style="background:#ffffff;"></span></span>
+                                <span>🟣 Súng Tím + Nền Trắng</span>
+                            </button>
+                            <button class="combo-chip"
+                                onclick="applyDualColor('#ffff00', '#0a0d14', 'Shadow (Súng Vàng + Nền Đen)')">
+                                <span class="combo-dots"><span style="background:#ffff00;"></span><span
+                                        style="background:#0a0d14; border:1px solid #666;"></span></span>
+                                <span>🖤 Súng Vàng + Nền Đen</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MÀU 1: THÂN SÚNG (M4A1) -->
+                    <div class="card-distinction-box box-gun" id="cardBoxGun">
+                        <div class="control-label">
+                            <span style="color: #ffff00; font-weight: 700; font-size: 0.92rem;">🟡 VỊ TRÍ 1: MÀU THÂN
+                                SÚNG M4A1</span>
+                            <div class="color-preview-badge">
+                                <span class="color-indicator" id="dvOutlineIndicator"
+                                    style="background: #ffff00;"></span>
+                                <span class="val-display" id="dvOutlineHex">#FFFF00</span>
+                            </div>
+                        </div>
+                        <small style="color: #cbd5e1; display: block; margin-bottom: 10px;">👉 Màu của khẩu súng ở giữa
+                            và dải sọc ngang</small>
+
+                        <div class="color-presets-grid">
+                            <button class="color-chip active" onclick="setDVOutlineColor('#ffff00', 255, 255, 0)">
+                                <span class="chip-circle" style="background: #ffff00;"></span>
+                                <span>Vàng Chanh</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVOutlineColor('#ff0033', 255, 0, 51)">
+                                <span class="chip-circle" style="background: #ff0033;"></span>
+                                <span>Đỏ Lửa</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVOutlineColor('#00f2fe', 0, 242, 254)">
+                                <span class="chip-circle" style="background: #00f2fe;"></span>
+                                <span>Xanh Neon</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVOutlineColor('#00ff66', 0, 255, 102)">
+                                <span class="chip-circle" style="background: #00ff66;"></span>
+                                <span>Xanh Lá</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVOutlineColor('#b026ff', 176, 38, 255)">
+                                <span class="chip-circle" style="background: #b026ff;"></span>
+                                <span>Tím Đậm</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVOutlineColor('#ff007f', 255, 0, 127)">
+                                <span class="chip-circle" style="background: #ff007f;"></span>
+                                <span>Hồng</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVOutlineColor('#ffffff', 255, 255, 255)">
+                                <span class="chip-circle" style="background: #ffffff;"></span>
+                                <span>Trắng Tuyết</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVOutlineColor('#ff8800', 255, 136, 0)">
+                                <span class="chip-circle" style="background: #ff8800;"></span>
+                                <span>Cam</span>
+                            </button>
+                        </div>
+
+                        <div class="custom-color-row" style="margin-top: 10px;">
+                            <span>Tự chọn màu khác:</span>
+                            <div class="picker-wrapper">
+                                <input type="color" id="dvOutlinePicker" value="#ffff00"
+                                    onchange="onDVOutlinePickerChange(this.value)">
+                                <span class="picker-label">Bấm để chọn màu bất kỳ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MÀU 2: MẢNG NỀN POSTER PHÍA SAU -->
+                    <div class="card-distinction-box box-backdrop" id="cardBoxBackdrop">
+                        <div class="control-label">
+                            <span style="color: #ffffff; font-weight: 700; font-size: 0.92rem;">⚪ VỊ TRÍ 2: 4 MẢNG NỀN
+                                POSTER PHÍA SAU</span>
+                            <div class="color-preview-badge">
+                                <span class="color-indicator" id="dvXRayIndicator" style="background: #ffffff;"></span>
+                                <span class="val-display" id="dvXRayHex">#FFFFFF</span>
+                            </div>
+                        </div>
+                        <small style="color: #94a3b8; display: block; margin-bottom: 10px;">👉 4 mảng phông nền rách
+                            viền nằm phía sau khẩu súng</small>
+
+                        <div class="color-presets-grid">
+                            <button class="color-chip active" onclick="setDVXRayColor('#ffffff', 255, 255, 255)">
+                                <span class="chip-circle" style="background: #ffffff;"></span>
+                                <span>Trắng Tuyết</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVXRayColor('#ffff00', 255, 255, 0)">
+                                <span class="chip-circle" style="background: #ffff00;"></span>
+                                <span>Vàng Chanh</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVXRayColor('#00f2fe', 0, 242, 254)">
+                                <span class="chip-circle" style="background: #00f2fe;"></span>
+                                <span>Xanh Neon</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVXRayColor('#ff0033', 255, 0, 51)">
+                                <span class="chip-circle" style="background: #ff0033;"></span>
+                                <span>Đỏ Lửa</span>
+                            </button>
+                            <button class="color-chip" onclick="setDVXRayColor('#0a0d14', 10, 13, 20)">
+                                <span class="chip-circle" style="background: #0a0d14; border: 1px solid #666;"></span>
+                                <span>Đen Tuyền</span>
+                            </button>
+                        </div>
+                        <div class="custom-color-row" style="margin-top: 10px;">
+                            <span>Tự chọn màu khác:</span>
+                            <div class="picker-wrapper">
+                                <input type="color" id="dvXRayPicker" value="#ffffff"
+                                    onchange="onDVXRayPickerChange(this.value)">
+                                <span class="picker-label">Bấm để chọn màu bất kỳ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ĐỘ RỘNG MẢNG NỀN -->
+                    <div class="control-group"
+                        style="margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 14px;">
+                        <div class="control-label">
+                            <span>Độ Dày / Rộng Mảng Nền Súng</span>
+                            <span class="val-display" id="dvWidthVal">2.0 px</span>
+                        </div>
+                        <div class="slider-row">
+                            <input type="range" id="dvWidthRange" min="0.5" max="8.0" step="0.5" value="2.0"
+                                oninput="onDVWidthChange(this.value)">
+                            <input type="number" id="dvWidthNum" min="0.5" max="15.0" step="0.5" value="2.0"
+                                oninput="onDVWidthChange(this.value)">
+                        </div>
+                        <div class="quick-chips">
+                            <span onclick="setDVWidthQuick(1.0)">1.0px (Gọn gàng)</span>
+                            <span onclick="setDVWidthQuick(2.0)">2.0px (Chuẩn Trong Ảnh)</span>
+                            <span onclick="setDVWidthQuick(3.5)">3.5px (Mảng rộng)</span>
+                            <span onclick="setDVWidthQuick(5.0)">5.0px (Cực đại)</span>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+
+            <!-- RIGHT PANEL: LIVE PREVIEW & DOWNLOAD -->
+            <div class="right-panel">
+
+                <!-- LIVE PREVIEW CARD -->
+                <section class="card glass-panel preview-card">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="badge-dot" id="gunStatusDot" style="background: #ffff00;"></span>
+                            <h2>Xem Trước Súng (Khớp 100% Ảnh Chụp)</h2>
+                        </div>
+                        <span class="zone-badge" id="dvZoneBadge" style="border-color: #ffff00; color: #ffff00;">🔫 SÚNG
+                            2 MÀU</span>
+                    </div>
+
+                    <!-- CANVAS TOOLS ROW FOR DISTINCTION -->
+                    <div class="canvas-tools-row">
+                        <div style="display: flex; gap: 6px;">
+                            <button class="canvas-tool-btn active" id="btnToggleAnnot" onclick="toggleAnnotations()">
+                                <span>🏷️ Chú Thích Mũi Tên</span>
+                            </button>
+                            <button class="canvas-tool-btn active" id="btnToggleContour" onclick="toggleContour()">
+                                <span>✨ Tách Viền Đen</span>
+                            </button>
+                        </div>
+                        <small style="color: #94a3b8; font-size: 0.72rem;">👆 Chạm trực tiếp vào súng hoặc nền để đổi
+                            màu</small>
+                    </div>
+
+                    <div class="canvas-container" style="background: #080a12; position: relative;">
+                        <canvas id="dvCanvas" width="340" height="380" style="cursor: pointer;"></canvas>
+                        <div class="canvas-overlay">
+                            <div class="overlay-stat">
+                                <span class="lbl">Màu Súng (1):</span>
+                                <span class="val" id="dvOverlayColor">#FFFF00</span>
+                            </div>
+                            <div class="overlay-stat">
+                                <span class="lbl">Mảng Nền (2):</span>
+                                <span class="val" id="dvOverlayXRay">#FFFFFF</span>
+                            </div>
+                            <div class="overlay-stat">
+                                <span class="lbl">Độ Dày:</span>
+                                <span class="val" id="dvOverlayMode">2.0 px</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BƯỚC 3: XUẤT VÀ TẢI FILE (ACTION CARD) -->
+                <section class="card glass-panel action-card">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="step-num">3</span>
+                            <h2>Tải File Về Máy</h2>
+                        </div>
+                        <span class="badge badge-success">Xong Ngay</span>
+                    </div>
+
+                    <div class="dv-actions">
+                        <button class="btn btn-primary btn-cta" id="btnBuildDV" onclick="buildAndDownloadDV('mod')">
+                            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5"
+                                fill="none">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span id="btnDvModText">TẢI FILE SÚNG MOD VỀ MÁY (13MB)</span>
+                        </button>
+
+                        <button class="btn btn-secondary btn-reset" onclick="buildAndDownloadDV('goc')">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2"
+                                fill="none">
+                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                <path d="M21 3v5h-5"></path>
+                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                <path d="M3 21v-5h5"></path>
+                            </svg>
+                            <span>Tải Lại File Shader Gốc (Bản An Toàn)</span>
+                        </button>
+                    </div>
+
+                    <!-- MINIMAL ACCORDION LOG -->
+                    <details class="advanced-details" style="margin-top: 14px;">
+                        <summary style="cursor: pointer; font-size: 0.76rem; color: #94a3b8;">
+                            <div class="folder-export-group" style="margin-top: 10px;">
+                                <input type="text" id="targetDvFolder" placeholder="Tên thư mục xuất..."
+                                    value="dv_mod_output">
+                                <button class="btn btn-secondary btn-sm" onclick="exportDVFolder()">Lưu Thư Mục</button>
+                            </div>
+                            <div class="log-terminal" id="dvLogBox" style="margin-top: 10px; display: none;">
+                                <pre id="dvLogContent"></pre>
+                            </div>
+                    </details>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             TAB 2: HITBOX & MAGIC BULLET STUDIO (CACHE)
+        ========================================================================= -->
+        <div id="moduleHitbox" class="main-grid" style="display: none;">
+
+            <!-- LEFT PANEL: DIRECT VALUE EDITING -->
+            <div class="left-panel">
+
+                <!-- FILE SOURCE BAR -->
+                <div class="file-source-banner">
+                    <div class="source-badge">
+                        <span class="dot-online"></span>
+                        <span>File Nguồn: <strong id="sourceNameDisplay">cache gốc</strong></span>
+                        <span class="file-size-tag" id="fileSizeDisplay">63,056 B</span>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="document.getElementById('uploadInput').click()">
+                        📁 Tải File Gốc Khác
+                    </button>
+                    <input type="file" id="uploadInput" style="display: none;" onchange="handleFileUpload(event)">
+                </div>
+
+                <!-- QUICK FORMULA MOD BUTTONS -->
+                <section class="card glass-panel">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="step-num">1</span>
+                            <h2>Áp Dụng Nhanh Công Thức Mod</h2>
+                        </div>
+                        <span class="badge badge-accent">1-Click Set</span>
+                    </div>
+
+                    <div class="formula-buttons-grid">
+                        <button class="formula-card formula-highlight" onclick="applyFormula('nhe_tam')">
+                            <img src="/static/img/preset_headshot.jpg" class="formula-thumb" alt="Nhẹ Tâm">
+                            <div class="formula-text">
+                                <strong>⚡ Mod Nhẹ Tâm ( 100%)</strong>
+                                <small>Radius 0.099m, Center X +0.055m cực nhạy</small>
+                            </div>
+                        </button>
+
+                        <button class="formula-card" onclick="applyFormula('cheast')">
+                            <img src="/static/img/preset_headshot.jpg" class="formula-thumb" alt="Cheast">
+                            <div class="formula-text">
+                                <strong>🎯 Ghim Headshot (cache cheast)</strong>
+                                <small>Đầu to +68%, kéo nhẹ cổ/ngực</small>
+                            </div>
+                        </button>
+
+                        <button class="formula-card" onclick="applyFormula('body')">
+                            <img src="/static/img/preset_body.jpg" class="formula-thumb" alt="Body">
+                            <div class="formula-text">
+                                <strong>💥 Bắn Thân = Headshot (cache body)</strong>
+                                <small>Kéo đầu tụt xuống giữa bụng/thân</small>
+                            </div>
+                        </button>
+
+                        <button class="formula-card formula-magic" onclick="applyFormula('magic')">
+                            <img src="/static/img/preset_magic.jpg" class="formula-thumb" alt="Magic">
+                            <div class="formula-text">
+                                <strong>🔮 Magic Bullet (magic cache)</strong>
+                                <small>Hitbox thân phình to 1.07m (x15.2 lần)</small>
+                            </div>
+                        </button>
+
+                        <button class="formula-card formula-combo" onclick="applyFormula('combo_cheast_magic')">
+                            <img src="/static/img/preset_magic.jpg" class="formula-thumb" alt="Combo">
+                            <div class="formula-text">
+                                <strong>👑 Combo: Headshot + Magic 1.07m</strong>
+                                <small>Vừa ghim đầu + Vừa hitbox thân khổng lồ</small>
+                            </div>
+                        </button>
+
+                        <button class="formula-card formula-reset" onclick="applyFormula('goc')">
+                            <img src="/static/img/hitbox_mannequin.jpg" class="formula-thumb" alt="Gốc">
+                            <div class="formula-text">
+                                <strong>🔄 Khôi Phục Gốc (Chuẩn Game)</strong>
+                                <small>Đưa tất cả về thông số gốc 100%</small>
+                            </div>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- DIRECT HITBOX CONTROLLER -->
+                <section class="card glass-panel">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="step-num">2</span>
+                            <h2>Chỉnh Sửa Trực Tiếp Chỉ Số</h2>
+                        </div>
+                        <label class="sync-switch">
+                            <input type="checkbox" id="syncGender" checked>
+                            <span class="slider round"></span>
+                            <span class="switch-label">Đồng bộ Nam & Nữ</span>
+                        </label>
+                    </div>
+
+                    <!-- TAB SELECTOR: HEAD VS BODY (SPINE) -->
+                    <div class="part-tabs-nav">
+                        <button class="part-tab-btn active" id="btnTabHead" onclick="switchPartTab('head')">
+                            🎯 Hitbox Đầu (bone_Head)
+                        </button>
+                        <button class="part-tab-btn" id="btnTabSpine" onclick="switchPartTab('spine')">
+                            🔮 Hitbox Thân / Magic Bullet (bone_Spine)
+                        </button>
+                    </div>
+
+                    <!-- SECTION A: HEAD HITBOX -->
+                    <div id="partSectionHead">
+                        <!-- RADIUS SLIDER -->
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Bán Kính Đầu (bone_Head Radius)</span>
+                                <span class="val-display" id="male_radius_val">0.05906 m</span>
+                            </div>
+                            <div class="slider-row">
+                                <input type="range" id="male_radius" min="0.03" max="0.30" step="0.001" value="0.05906">
+                                <input type="number" id="male_radius_num" min="0.03" max="0.50" step="0.001"
+                                    value="0.05906">
+                            </div>
+                            <div class="quick-chips">
+                                <span onclick="setRadiusQuick('male', 0.05906)">Gốc (0.059m)</span>
+                                <span onclick="setRadiusQuick('male', 0.08850)">+50% (0.088m)</span>
+                                <span onclick="setRadiusQuick('male', 0.09909)">Cheast (+68%)</span>
+                                <span onclick="setRadiusQuick('male', 0.11800)">Gấp đôi (x2)</span>
+                                <span onclick="setRadiusQuick('male', 0.15000)">Siêu to (x2.5)</span>
+                            </div>
+                        </div>
+
+                        <!-- CENTER X SLIDER -->
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Vị Trí Trọng Tâm Đầu Dọc Thân (Center.x)</span>
+                                <span class="val-display highlight" id="male_center_x_val">-0.04525 m</span>
+                            </div>
+                            <div class="slider-row">
+                                <input type="range" id="male_center_x" min="-0.08" max="0.22" step="0.001"
+                                    value="-0.04525">
+                                <input type="number" id="male_center_x_num" min="-0.15" max="0.50" step="0.001"
+                                    value="-0.04525">
+                            </div>
+                            <div class="pos-markers">
+                                <span onclick="setCenterPos('male', -0.04525)">Đầu Gốc (-0.045m)</span>
+                                <span onclick="setCenterPos('male', -0.01061)">Cổ / Ngực trên (-0.011m)</span>
+                                <span onclick="setCenterPos('male', 0.05000)">Giữa Ngực (+0.050m)</span>
+                                <span onclick="setCenterPos('male', 0.12103)">Giữa Thân/Bụng (+0.121m)</span>
+                            </div>
+                            <small class="helper-text">Âm = trên đỉnh đầu | Dương = kéo tụt xuống ngực & bụng (Bắn thân
+                                tự tính Headshot)</small>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Chiều cao đầu (Height)</span>
+                                <span class="val-display" id="male_height_val">0.12749 m</span>
+                            </div>
+                            <div class="slider-row">
+                                <input type="range" id="male_height" min="0.05" max="0.30" step="0.001" value="0.12749">
+                                <input type="number" id="male_height_num" step="0.001" value="0.12749">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION B: SPINE / MAGIC BULLET HITBOX -->
+                    <div id="partSectionSpine" style="display: none;">
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Bán Kính Thân / Magic Bullet (bone_Spine Radius)</span>
+                                <span class="val-display highlight-purple" id="spine_radius_val">0.07029 m</span>
+                            </div>
+                            <div class="slider-row">
+                                <input type="range" id="spine_radius" min="0.05" max="1.50" step="0.01" value="0.07029">
+                                <input type="number" id="spine_radius_num" min="0.05" max="2.00" step="0.01"
+                                    value="0.07029">
+                            </div>
+                            <div class="quick-chips">
+                                <span onclick="setSpineQuick(0.07029, 0.17991)">Gốc (0.07m)</span>
+                                <span onclick="setSpineQuick(0.30, 0.35)">0.30m (x4 lần)</span>
+                                <span onclick="setSpineQuick(0.50, 0.60)">0.50m (x7 lần)</span>
+                                <span onclick="setSpineQuick(1.07035, 1.07035)">🔮 Chuẩn Magic Cache (1.07m)</span>
+                                <span onclick="setSpineQuick(1.50, 1.50)">1.50m (Cực Đại)</span>
+                            </div>
+                            <small class="helper-text">Bản "magic cache" phóng to bán kính thân lên 1.07 mét, bắn lệch
+                                ngoài vẫn trúng thân!</small>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Chiều cao thân (bone_Spine Height)</span>
+                                <span class="val-display highlight-purple" id="spine_height_val">0.17991 m</span>
+                            </div>
+                            <div class="slider-row">
+                                <input type="range" id="spine_height" min="0.10" max="1.50" step="0.01" value="0.17991">
+                                <input type="number" id="spine_height_num" min="0.10" max="2.00" step="0.01"
+                                    value="0.17991">
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+
+            <!-- RIGHT PANEL: PREVIEW & BUILD -->
+            <div class="right-panel">
+
+                <!-- 2D HITBOX MANNEQUIN PREVIEW -->
+                <section class="card glass-panel preview-card">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="badge-dot"></span>
+                            <h2>Mô Phỏng Trực Quan Hitbox</h2>
+                        </div>
+                        <span class="zone-badge" id="zoneIndicator">🎯 Vùng trúng: ĐẦU</span>
+                    </div>
+
+                    <div class="canvas-tools-row" style="margin-bottom: 8px;">
+                        <div style="display: flex; gap: 6px;">
+                            <button class="canvas-tool-btn active" id="btnHitboxModeImg"
+                                onclick="toggleHitboxMode('image')">
+                                <span>🖼️ Nhân Vật 3D</span>
+                            </button>
+                            <button class="canvas-tool-btn" id="btnHitboxModeRadar" onclick="toggleHitboxMode('radar')">
+                                <span>📡 Radar 2D</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="hitboxCanvas" width="340" height="440"></canvas>
+                        <div class="canvas-overlay">
+                            <div class="overlay-stat">
+                                <span class="lbl">Bán kính đầu:</span>
+                                <span class="val" id="canvasRadius">0.059m</span>
+                            </div>
+                            <div class="overlay-stat">
+                                <span class="lbl">Bán kính thân:</span>
+                                <span class="val" id="canvasSpine">0.070m</span>
+                            </div>
+                            <div class="overlay-stat">
+                                <span class="lbl">Vị trí đầu:</span>
+                                <span class="val" id="canvasZone">Đầu (Head)</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BUILD & EXPORT PANEL -->
+                <section class="card glass-panel action-card">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="step-num">3</span>
+                            <h2>Biên Dịch & Xuất File</h2>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-cta" id="btnBuild" onclick="triggerBuild()">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5"
+                            fill="none">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                        <span>BUILD FILE CACHE TỪ GỐC</span>
+                    </button>
+
+                    <!-- EXPORT ACTIONS (AFTER BUILD) -->
+                    <div class="build-result" id="buildResult" style="display: none;">
+                        <div class="success-banner">
+                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5"
+                                fill="none">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <div>
+                                <strong>Build thành công từ File Gốc!</strong>
+                                <span id="buildInfo">Dung lượng: 63,056 bytes chuẩn 100% Unity</span>
+                            </div>
+                        </div>
+
+                        <div class="export-grid">
+                            <button class="btn btn-download" onclick="downloadCurrentBuild()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2"
+                                    fill="none">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                <span>Tải Về File Mod</span>
+                            </button>
+
+                            <button class="btn btn-overwrite" onclick="overwriteGocFile()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2"
+                                    fill="none">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                    <polyline points="7 3 7 8 15 8"></polyline>
+                                </svg>
+                                <span>Ghi Đè Thư Mục Gốc (.bak)</span>
+                            </button>
+                        </div>
+
+                        <div class="folder-export-group">
+                            <input type="text" id="targetFolderName" placeholder="Tên thư mục xuất mới..."
+                                value="cache mod_output">
+                            <button class="btn btn-secondary" onclick="exportToFolder()">Lưu Thư Mục</button>
+                        </div>
+
+                        <div class="log-terminal">
+                            <div class="log-title">Chi Tiết Thay Đổi So Với Gốc:</div>
+                            <pre id="logContent"></pre>
+                        </div>
+                    </div>
+
+                </section>
+
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             TAB: MAKE AVATAR NEW (ASSETINDEXER - AIM HEAD / BODY / SÚNG TO)
+        ========================================================================= -->
+        <div id="moduleAvatar" class="main-grid" style="display: none;">
+            <!-- LEFT PANEL: CẤU HÌNH -->
+            <div class="left-panel">
+                <section class="card glass-panel">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="step-num">1</span>
+                            <h2>Chọn Mẫu Aim Avatar (Presets)</h2>
+                        </div>
+                        <span class="badge badge-accent">VIP 2</span>
+                    </div>
+
+                    <div class="dv-mode-grid"
+                        style="grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px;">
+                        <div class="dv-card active" id="avtPresetHead" onclick="selectAvatarPreset('aimbot_head')">
+                            <strong>🎯 Aim Head (Đầu HS)</strong>
+                            <p class="dv-desc-sub" style="font-size: 0.8rem;">Ghim thẳng vào đỉnh đầu (HS 100%)</p>
+                        </div>
+                        <div class="dv-card" id="avtPresetNeck" onclick="selectAvatarPreset('aimbot_neck')">
+                            <strong>⚡ Aim Neck (Hạ Cổ HS)</strong>
+                            <p class="dv-desc-sub" style="font-size: 0.8rem;">Hạ cổ HS tránh ngửa tâm</p>
+                        </div>
+                        <div class="dv-card" id="avtPresetBody" onclick="selectAvatarPreset('aim_body_all_hs')">
+                            <strong>🔥 Aim Body (Spine HS)</strong>
+                            <p class="dv-desc-sub" style="font-size: 0.8rem;">Bắn ngực/thân ra Headshot 100%</p>
+                        </div>
+                        <div class="dv-card" id="avtPresetHips" onclick="selectAvatarPreset('aim_hips_hs')">
+                            <strong>🛡️ Aim Hips (Hông HS)</strong>
+                            <p class="dv-desc-sub" style="font-size: 0.8rem;">Bắn hông/bụng ra Headshot</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card glass-panel" style="margin-top: 15px;">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="step-num">2</span>
+                            <h2>Thông Số Hitbox & Xương (Bone)</h2>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
+                        <div class="control-group">
+                            <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">Tên Bone
+                                Đích</label>
+                            <input type="text" id="avtTargetBone" value="bone_Head"
+                                style="width: 100%; padding: 8px 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; font-family: 'JetBrains Mono', monospace;">
+                        </div>
+                        <div class="control-group">
+                            <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">Parent
+                                Hash</label>
+                            <input type="text" id="avtParentHash" value="-1541408846"
+                                style="width: 100%; padding: 8px 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; color: var(--accent-cyan); font-family: 'JetBrains Mono', monospace;">
+                        </div>
+                    </div>
+
+                    <div class="control-group" style="margin-top: 14px;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label style="font-size: 0.85rem; font-weight: 700;">Hệ Số Phóng To Hitbox (Scale)</label>
+                            <span id="avtScaleVal"
+                                style="font-weight: 900; color: var(--accent-cyan); font-family: 'JetBrains Mono', monospace;">1.55x</span>
+                        </div>
+                        <input type="range" id="avtScale" min="0.5" max="4.0" step="0.05" value="1.55"
+                            oninput="document.getElementById('avtScaleVal').innerText = Number(this.value).toFixed(2) + 'x'"
+                            style="width: 100%;">
+                    </div>
+
+                    <div
+                        style="margin-top: 14px; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 10px; border: 1px solid var(--border-color);">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 700;">
+                            <input type="checkbox" id="avtModBigGun"
+                                onchange="document.getElementById('avtGunScaleBox').style.display = this.checked ? 'block' : 'none'">
+                            <span>Kích Hoạt Chỉnh Súng To (Big Weapon 1.0x - 8.0x)</span>
+                        </label>
+                        <div id="avtGunScaleBox" style="display: none; margin-top: 10px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted);">Độ phóng to vũ khí:</span>
+                                <span id="avtGunScaleVal" style="color: #f59e0b; font-weight: 800;">3.5x</span>
+                            </div>
+                            <input type="range" id="avtGunScale" min="1.0" max="8.0" step="0.1" value="3.5"
+                                oninput="document.getElementById('avtGunScaleVal').innerText = Number(this.value).toFixed(1) + 'x'"
+                                style="width: 100%;">
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- RIGHT PANEL: BUILD & LOG -->
+            <div class="right-panel">
+                <section class="card glass-panel preview-card">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="step-num">3</span>
+                            <h2>Biên Dịch & Xuất File Avatar</h2>
+                        </div>
+                    </div>
+
+                    <div style="padding: 15px 0;">
+                        <div
+                            style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.25); border-radius: 12px;">
+                            <div style="font-size: 1.8rem;">📦</div>
+                            <div>
+                                <strong
+                                    style="color: #fff; font-size: 0.95rem;">assetindexer.U6Zffc4YIR3DslNj3cXvYGAqz58~3D</strong>
+                                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Tự động
+                                    Re-Spoof Header 2018.4.12f1 & đệm chuẩn 46,096 bytes</p>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-glow" id="btnBuildAvatar" onclick="triggerAvatarBuild()"
+                            style="width: 100%; margin-top: 18px; padding: 14px 20px; font-size: 1.05rem;">
+                            🚀 TẠO FILE AVATAR MOD (ASSETINDEXER)
+                        </button>
+                    </div>
+
+                    <div id="avtBuildResult" style="display: none; margin-top: 15px;">
+                        <div style="padding: 10px; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 8px; color: #34d399; font-size: 0.85rem; font-weight: 700;"
+                            id="avtBuildInfo">
+                            Biên dịch thành công!
+                        </div>
+                        <div class="log-terminal" style="margin-top: 12px;">
+                            <div class="log-title">Chi Tiết Thay Đổi:</div>
+                            <pre id="avtLogContent" style="font-size: 0.75rem; line-height: 1.5; color: #38bdf8;"></pre>
+                        </div>
+                        <button class="btn btn-success" id="btnDownloadAvatar" style="width: 100%; margin-top: 12px;"
+                            onclick="downloadAvatarBuild()">
+                            ⬇️ TẢI FILE ASSETINDEXER ĐÃ BUILD VỀ MÁY
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             TAB 3: HƯỚNG DẪN CÀI ĐẶT (1 PHÚT LÀ XONG)
+        ========================================================================= -->
+        <div id="moduleGuide" class="main-grid" style="display: none;">
+            <div class="left-panel" style="grid-column: 1 / -1;">
+                <section class="card glass-panel guide-full-card">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <span class="step-num">📖</span>
+                            <h2>Hướng Dẫn Chép File Mod Vào Game (1 Phút)</h2>
+                        </div>
+                        <span class="badge badge-success">Siêu Dễ</span>
+                    </div>
+
+                    <div class="guide-steps-grid">
+                        <div class="guide-step-box">
+                            <div class="step-circle">1</div>
+                            <h3>Tải File Về Máy</h3>
+                            <p>Chọn màu súng hoặc công thức hitbox bạn thích, rồi bấm nút màu xanh to tướng <b>"TẢI FILE
+                                    VỀ MÁY"</b>.</p>
+                        </div>
+
+                        <div class="guide-step-box">
+                            <div class="step-circle">2</div>
+                            <h3>Mở Ứng Dụng Quản Lý File</h3>
+                            <p>Trên <b>Android</b> tải app miễn phí <b>ZArchiver</b> trên CH Play. Trên <b>iOS</b> dùng
+                                Filza hoặc TrollStore.</p>
+                        </div>
+
+                        <div class="guide-step-box">
+                            <div class="step-circle">3</div>
+                            <h3>Dán Đè Vào Thư Mục Game</h3>
+                            <p>Vào thư mục <code>Download</code>, copy file vừa tải và dán đè vào đường dẫn tương ứng
+                                bên dưới:</p>
+                        </div>
+                    </div>
+
+                    <!-- PATH CARDS -->
+                    <div class="path-guide-cards" style="margin-top: 20px;">
+                        <div class="path-card">
+                            <div class="path-title">
+                                <span>🤖 Đường dẫn trên Android (Free Fire Thường):</span>
+                                <button class="btn btn-secondary btn-sm"
+                                    onclick="copyText('Android/data/com.dts.freefireth/files/content/Temp/res/')">Sao
+                                    Chép</button>
+                            </div>
+                            <code>Android/data/com.dts.freefireth/files/content/Temp/res/</code>
+                        </div>
+
+                        <div class="path-card" style="margin-top: 10px;">
+                            <div class="path-title">
+                                <span>🔥 Đường dẫn trên Android (Free Fire MAX):</span>
+                                <button class="btn btn-secondary btn-sm"
+                                    onclick="copyText('Android/data/com.dts.freefiremax/files/content/Temp/res/')">Sao
+                                    Chép</button>
+                            </div>
+                            <code>Android/data/com.dts.freefiremax/files/content/Temp/res/</code>
+                        </div>
+
+                        <div class="path-card" style="margin-top: 10px;">
+                            <div class="path-title">
+                                <span>🍏 Đường dẫn trên iPhone / iPad (iOS):</span>
+                                <button class="btn btn-secondary btn-sm"
+                                    onclick="copyText('Documents/content/Temp/res/')">Sao Chép</button>
+                            </div>
+                            <code>Documents/content/Temp/res/</code>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 24px; text-align: center;">
+                        <button class="btn btn-primary" onclick="switchModule('dv')"
+                            style="padding: 12px 28px; font-size: 1rem;">
+                            👉 Bắt Đầu Mod Màu Súng Ngay
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>Flork Mod Studio • Hoạt động mượt mà trên Điện Thoại & Máy Tính • Kết nối Wi-Fi tốc độ cao</p>
+        </footer>
+    </div>
+
+    <!-- AUTH MODAL (LOGIN / REGISTER) -->
+    <div id="authModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-dialog">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="font-size: 1.1rem; font-weight: 800;" id="authModalTitle">XÁC THỰC TÀI KHOẢN</h3>
+                <button onclick="closeAuthModal()"
+                    style="background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer;">✕</button>
+            </div>
+
+            <div class="modal-tabs">
+                <button class="modal-tab-btn active" id="tabAuthLogin" onclick="switchAuthTab('login')">Đăng
+                    Nhập</button>
+                <button class="modal-tab-btn" id="tabAuthRegister" onclick="switchAuthTab('register')">Đăng Ký
+                    Mới</button>
+            </div>
+
+            <form onsubmit="handleAuthSubmit(event)">
+                <div class="modal-input-group">
+                    <label id="lblAuthUser">Tên Tài Khoản</label>
+                    <input type="text" id="authUsername" class="modal-input" placeholder="Nhập tên tài khoản..."
+                        required>
+                </div>
+
+                <div class="modal-input-group">
+                    <label id="lblAuthPass">Mật Khẩu</label>
+                    <input type="password" id="authPassword" class="modal-input" placeholder="Nhập mật khẩu..."
+                        required>
+                </div>
+
+                <div class="hwid-info-box">
+                    <span>Mã Thiết Bị (HWID): </span>
+                    <strong id="displayHWID" style="color: var(--primary);">Đang tạo...</strong>
+                </div>
+
+                <div id="authModalError"
+                    style="color: var(--danger); font-size: 0.8rem; margin-bottom: 12px; display: none;"></div>
+
+                <button type="submit" class="btn btn-primary" id="btnAuthSubmit" style="width: 100%;">
+                    TIẾP TỤC
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast"></div>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
