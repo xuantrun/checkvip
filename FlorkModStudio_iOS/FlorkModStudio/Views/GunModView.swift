@@ -20,42 +20,14 @@ public struct GunModView: View {
     
     public var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
+            VStack(spacing: 22) {
                 
-                // MARK: - Welcome & Status Banner
-                HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Shader")
-                            .font(.system(size: 17, weight: .bold))
-                            .foregroundColor(theme.primaryText)
-                        Text("Hệ thống phối màu súng Free Fire")
-                            .font(.caption2)
-                            .foregroundColor(theme.secondaryText)
-                    }
-                    
-                    Spacer()
-                    
-                    HStack(spacing: 5) {
-                        Circle().fill(apiService.isOnline ? Color.green : Color.red).frame(width: 7, height: 7)
-                        Text(apiService.isOnline ? "Hoạt Động" : "Ngoại Tuyến")
-                            .font(.system(size: 11, weight: .bold))
-                            .foregroundColor(apiService.isOnline ? .green : .red)
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(Color.white.opacity(0.06))
-                    .clipShape(Capsule())
-                }
-                .padding(14)
-                .background(theme.cardBackground)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
-                
+                StudioHero(eyebrow: "STUDIO / SHADER", title: "Màu sắc của bạn.", subtitle: "Chọn phiên bản, phối màu và xem trước bản dựng.", icon: "paintpalette")
                 // MARK: - Bước 1: Chọn Phiên Bản Game
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
                         Image(systemName: "gamecontroller.fill")
-                            .foregroundColor(.cyan)
+                            .foregroundColor(theme.accentColor)
                         Text(loc.t("gun_step1"))
                             .font(.headline)
                             .foregroundColor(theme.primaryText)
@@ -84,7 +56,7 @@ public struct GunModView: View {
                                             Spacer()
                                             if selectedVersion == ver {
                                                 Image(systemName: "checkmark.circle.fill")
-                                                    .foregroundColor(.cyan)
+                                                    .foregroundColor(theme.accentColor)
                                                     .font(.system(size: 18))
                                             } else {
                                                 Circle()
@@ -100,11 +72,11 @@ public struct GunModView: View {
                                 }
                                 .padding(12)
                                 .frame(maxWidth: .infinity)
-                                .background(selectedVersion == ver ? Color.cyan.opacity(0.12) : Color.white.opacity(0.04))
-                                .cornerRadius(14)
+                                .background(selectedVersion == ver ? theme.accentColor.opacity(0.12) : theme.primaryText.opacity(0.04))
+                                .cornerRadius(20)
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 14)
-                                        .stroke(selectedVersion == ver ? Color.cyan : Color.white.opacity(0.1), lineWidth: 1.5)
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(selectedVersion == ver ? theme.accentColor : theme.primaryText.opacity(0.1), lineWidth: 1.5)
                                 )
                             }
                         }
@@ -112,8 +84,8 @@ public struct GunModView: View {
                 }
                 .padding()
                 .background(theme.cardBackground)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+                .cornerRadius(24)
+                .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
                 
                 // MARK: - Xem Trước Trực Quan Súng M4A1
                 VStack(alignment: .leading, spacing: 10) {
@@ -127,7 +99,7 @@ public struct GunModView: View {
                             .foregroundColor(theme.primaryText)
                         Spacer()
                         Text("DÂY VÀNG 2 MÀU")
-                            .font(.system(size: 10, weight: .bold))
+                            .font(.system(size: 12, weight: .bold))
                             .foregroundColor(.yellow)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
@@ -159,14 +131,14 @@ public struct GunModView: View {
                 }
                 .padding()
                 .background(theme.cardBackground)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+                .cornerRadius(24)
+                .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
                 
                 // MARK: - Bước 2: Phối Màu Súng & Nền
                 VStack(alignment: .leading, spacing: 16) {
                     HStack {
                         Image(systemName: "paintpalette.fill")
-                            .foregroundColor(.cyan)
+                            .foregroundColor(theme.accentColor)
                         Text(loc.t("gun_step2"))
                             .font(.headline)
                             .foregroundColor(theme.primaryText)
@@ -190,7 +162,7 @@ public struct GunModView: View {
                         }
                     }
                     
-                    Divider().background(Color.white.opacity(0.1))
+                    Divider().background(theme.primaryText.opacity(0.1))
                     
                     // Color Pickers
                     VStack(spacing: 12) {
@@ -210,7 +182,7 @@ public struct GunModView: View {
                             Text(String(format: "%.1f px", outlineWidth))
                                 .font(.subheadline)
                                 .fontWeight(.bold)
-                                .foregroundColor(.cyan)
+                                .foregroundColor(theme.accentColor)
                         }
                         Slider(value: $outlineWidth, in: 0.5...8.0, step: 0.5)
                             .accentColor(.cyan)
@@ -218,67 +190,25 @@ public struct GunModView: View {
                 }
                 .padding()
                 .background(theme.cardBackground)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+                .cornerRadius(24)
+                .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
                 
-                // MARK: - Bước 3: Xuất File (Gatekeeper Enforced)
-                VStack(spacing: 12) {
-                    Button(action: {
-                        buildAndExportGun(mode: "mod")
-                    }) {
-                        HStack(spacing: 8) {
-                            if isProcessing {
-                                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .black))
-                            } else {
-                                Image(systemName: "arrow.down.circle.fill")
-                            }
-                            Text(loc.t("gun_export"))
-                                .fontWeight(.bold)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(LinearGradient(colors: [Color.cyan, Color.blue], startPoint: .leading, endPoint: .trailing))
-                        .foregroundColor(.black)
-                        .cornerRadius(14)
-                        .shadow(color: Color.cyan.opacity(0.4), radius: 8, y: 4)
-                    }
-                    .disabled(isProcessing)
-                    
-                    Button(action: {
-                        injectGunToGame()
-                    }) {
-                        HStack(spacing: 8) {
-                            Image(systemName: "bolt.fill")
-                            Text("CÀI ĐẶT TRỰC TIẾP VÀO GAME")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.purple.opacity(0.25))
-                        .foregroundColor(.purple)
-                        .cornerRadius(14)
-                        .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.purple.opacity(0.5), lineWidth: 1))
-                    }
-                    .disabled(isProcessing)
-                    
-                    Button(action: {
-                        buildAndExportGun(mode: "goc")
-                    }) {
-                        HStack {
-                            Image(systemName: "arrow.counterclockwise")
-                            Text("Tải Lại Shader Gốc (Bản An Toàn)")
-                                .font(.caption)
-                        }
-                        .foregroundColor(theme.secondaryText)
-                    }
+                StudioPanel("Tạo bản dựng", icon: "arrow.down.doc") {
+                    Button { buildAndExportGun(mode: "mod") } label: {
+                        Label(isProcessing ? "Đang tạo bản dựng…" : "Tạo & xuất Shader", systemImage: "arrow.down.doc")
+                    }.buttonStyle(StudioActionStyle()).disabled(isProcessing)
+                    Button(action: injectGunToGame) { Label("Cài vào game", systemImage: "square.and.arrow.down") }
+                        .buttonStyle(StudioActionStyle(secondary: true)).disabled(isProcessing)
+                    Button { buildAndExportGun(mode: "goc") } label: {
+                        Label("Khôi phục Shader gốc", systemImage: "arrow.counterclockwise").frame(minHeight: 44)
+                    }.disabled(isProcessing)
                 }
-                .padding(.horizontal)
             }
-            .padding()
+            .padding(20).frame(maxWidth: 760).frame(maxWidth: .infinity)
         }
+        .safeAreaInset(edge: .bottom) { if isProcessing { StudioBusyBar(text: "Đang tạo bản dựng Shader…") } }
         .background(theme.backgroundColor)
-        .navigationTitle("Shader")
+        .navigationTitle("Shader Studio")
         .navigationBarTitleDisplayMode(.inline)
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Thông Báo"), message: Text(alertMessage), dismissButton: .default(Text("Xác Nhận")))
@@ -316,9 +246,9 @@ public struct GunModView: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.white.opacity(0.04))
+            .background(theme.primaryText.opacity(0.04))
             .cornerRadius(8)
-            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white.opacity(0.1), lineWidth: 1))
+            .overlay(RoundedRectangle(cornerRadius: 8).stroke(theme.primaryText.opacity(0.1), lineWidth: 1))
         }
     }
     

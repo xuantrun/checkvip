@@ -10,22 +10,7 @@ public struct GameGuideView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 
-                // Header Banner
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("HƯỚNG DẪN CÀI ĐẶT BUILD FILE")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.cyan)
-                    Text("Áp dụng cho mọi dòng iPhone & iPad (iOS 14.0 - 18.x+)")
-                        .font(.caption)
-                        .foregroundColor(theme.secondaryText)
-                }
-                .padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color.blue.opacity(0.12))
-                .cornerRadius(14)
-                .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.blue.opacity(0.3), lineWidth: 1))
-                
+                StudioHero(eyebrow: "STUDIO / GUIDE", title: "Bắt đầu dễ dàng.", subtitle: "Chọn cách cài đặt phù hợp với thiết bị của bạn.", icon: "book.closed")
                 // Cách 1: TrollStore
                 guideSection(
                     title: "1. Dành Cho Máy Có TrollStore",
@@ -71,7 +56,7 @@ public struct GameGuideView: View {
                     ]
                 )
             }
-            .padding()
+            .padding(20).frame(maxWidth: 760).frame(maxWidth: .infinity)
         }
         .background(theme.backgroundColor.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
@@ -96,7 +81,7 @@ public struct GameGuideView: View {
                     .foregroundColor(theme.primaryText)
                 Spacer()
                 Text(badge)
-                    .font(.system(size: 9, weight: .bold))
+                    .font(.system(size: 12, weight: .bold))
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
                     .background(badgeColor.opacity(0.2))
@@ -110,7 +95,7 @@ public struct GameGuideView: View {
                         Text("\(idx + 1).")
                             .font(.caption)
                             .fontWeight(.bold)
-                            .foregroundColor(.cyan)
+                            .foregroundColor(theme.accentColor)
                             .frame(width: 16, alignment: .leading)
                         Text(step)
                             .font(.caption)
@@ -121,7 +106,7 @@ public struct GameGuideView: View {
         }
         .padding()
         .background(theme.cardBackground)
-        .cornerRadius(14)
-        .overlay(RoundedRectangle(cornerRadius: 14).stroke(theme.cardBorder, lineWidth: 1))
+        .cornerRadius(20)
+        .overlay(RoundedRectangle(cornerRadius: 20).stroke(theme.cardBorder, lineWidth: 1))
     }
 }

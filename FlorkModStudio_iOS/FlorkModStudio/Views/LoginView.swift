@@ -52,7 +52,7 @@ public struct LoginView: View {
                         } else {
                             Image(systemName: "person.crop.circle.fill")
                                 .font(.system(size: 80))
-                                .foregroundColor(.cyan)
+                                .foregroundColor(theme.accentColor)
                                 .padding(.top, 20)
                         }
                         
@@ -80,7 +80,7 @@ public struct LoginView: View {
                                     .font(.system(size: 11, weight: .semibold))
                                     .foregroundColor(api.isOnline ? .green : .orange)
                                 Image(systemName: "arrow.clockwise")
-                                    .font(.system(size: 9))
+                                    .font(.system(size: 12))
                                     .foregroundColor(.gray)
                             }
                             .padding(.horizontal, 14)
@@ -138,7 +138,7 @@ public struct LoginView: View {
                     }
                     
                     // MARK: - Input Form
-                    VStack(spacing: 16) {
+                    VStack(spacing: 22) {
                         StudioFloatingField(title: loc.t("username"), icon: "person", text: $username)
                         StudioFloatingField(title: loc.t("password"), icon: "lock", text: $password, secure: true)
                         if isRegisterMode {
@@ -171,7 +171,7 @@ public struct LoginView: View {
                                 )
                             )
                             .foregroundColor(theme.currentTheme == .monochrome ? .black : .white)
-                            .cornerRadius(14)
+                            .cornerRadius(20)
                             .shadow(color: Color.cyan.opacity(0.3), radius: 10, y: 4)
                         }
                         .disabled(isLoading || username.trimmingCharacters(in: .whitespaces).isEmpty || password.isEmpty)
@@ -188,7 +188,7 @@ public struct LoginView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
                             Image(systemName: "cpu")
-                                .foregroundColor(.cyan)
+                                .foregroundColor(theme.accentColor)
                             Text("MÃ ĐỊNH DANH THIẾT BỊ (HWID)")
                                 .font(.caption2)
                                 .fontWeight(.bold)
@@ -206,7 +206,7 @@ public struct LoginView: View {
                                     Text(copiedHwid ? "Đã chép" : "Sao chép")
                                 }
                                 .font(.caption2)
-                                .foregroundColor(.cyan)
+                                .foregroundColor(theme.accentColor)
                             }
                         }
                         
@@ -217,13 +217,13 @@ public struct LoginView: View {
                             .truncationMode(.middle)
                         
                         Text("HWID dùng để liên kết bảo vệ tài khoản và cấp phép tính năng mod.")
-                            .font(.system(size: 10))
+                            .font(.system(size: 12))
                             .foregroundColor(theme.secondaryText)
                     }
                     .padding(14)
                     .background(theme.cardBackground)
-                    .cornerRadius(14)
-                    .overlay(RoundedRectangle(cornerRadius: 14).stroke(theme.cardBorder, lineWidth: 1))
+                    .cornerRadius(20)
+                    .overlay(RoundedRectangle(cornerRadius: 20).stroke(theme.cardBorder, lineWidth: 1))
                     .padding(.horizontal)
                     
                     // Footer
@@ -334,8 +334,8 @@ struct StudioFloatingField: View {
         .padding(.horizontal, 14)
         .frame(minHeight: 66)
         .background(Color.primary.opacity(0.045))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16)
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .overlay(RoundedRectangle(cornerRadius: 24)
             .stroke(focused ? Color.accentColor : Color.primary.opacity(0.12), lineWidth: focused ? 1.5 : 1))
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: raised)
     }

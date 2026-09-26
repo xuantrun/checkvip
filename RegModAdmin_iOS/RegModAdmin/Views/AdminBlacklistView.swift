@@ -1,186 +1,83 @@
-import SwiftUI
+﻿import SwiftUI
 
 public struct AdminBlacklistView: View {
-    @ObservedObject var api = AdminAPIService.shared
-    @State private var newHWID: String = ""
-    @State private var newReason: String = "Chặn qua App Admin"
-    @State private var showAddModal: Bool = false
-    @State private var copiedHWID: String? = nil
-    
+    @ObservedObject private var api = AdminAPIService.shared
+    @ObservedObject private var theme = ThemeManager.shared
+    @State private var search = ""
+    @State private var newHWID = ""
+    @State private var reason = ""
+    @State private var showAdd = false
+    @State private var submitting = false
+    @State private var pendingHWID: String?
+    @State private var message = ""
+    @State private var formError = ""
     public init() {}
-    
-    public var body: some View {
-        VStack(spacing: 14) {
-            // Header with Add Button
-            HStack {
-                Text("DANH SÁCH HWID BỊ CHẶN (\(api.blacklist.count))")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundColor(.gray)
-                Spacer()
-                Button(action: { showAddModal = true }) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "plus.circle.fill")
-                        Text("Chặn HWID Mới")
-                    }
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(Color.red)
-                    .cornerRadius(8)
-                }
-            }
-            .padding(.horizontal)
-            
-            if api.blacklist.isEmpty {
-                VStack(spacing: 12) {
-                    Spacer().frame(height: 50)
-                    Image(systemName: "checkmark.shield.fill")
-                        .font(.system(size: 48))
-                        .foregroundColor(.green.opacity(0.6))
-                    Text("Hiện chưa có thiết bị nào bị chặn")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-            } else {
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        ForEach(api.blacklist) { item in
-                            blacklistCard(item)
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 24)
-                }
-            }
-        }
-        .sheet(isPresented: $showAddModal) {
-            ZStack {
-                Color(red: 0.05, green: 0.06, blue: 0.09).ignoresSafeArea()
-                VStack(spacing: 20) {
-                    Text("CHẶN THIẾT BỊ (HWID)")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding(.top, 20)
-                    
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("MÃ HWID THIẾT BỊ")
-                            .font(.caption2)
-                            .foregroundColor(.gray)
-                        TextField("Nhập chuỗi HWID cần chặn...", text: $newHWID)
-                            .padding()
-                            .background(Color.white.opacity(0.06))
-                            .cornerRadius(10)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.horizontal)
-                    
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("LÝ DO CHẶN")
-                            .font(.caption2)
-                            .foregroundColor(.gray)
-                        TextField("Lý do...", text: $newReason)
-                            .padding()
-                            .background(Color.white.opacity(0.06))
-                            .cornerRadius(10)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.horizontal)
-                    
-                    HStack(spacing: 16) {
-                        Button("Hủy") { showAddModal = false }
-                            .foregroundColor(.gray)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.white.opacity(0.06))
-                            .cornerRadius(12)
-                        
-                        Button(action: {
-                            let hw = newHWID.trimmingCharacters(in: .whitespacesAndNewlines)
-                            if !hw.isEmpty {
-                                api.blockHWID(hwid: hw, reason: newReason) { _ in
-                                    newHWID = ""
-                                    showAddModal = false
-                                }
-                            }
-                        }) {
-                            Text("Xác Nhận Chặn")
-                                .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.red)
-                                .cornerRadius(12)
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    Spacer()
-                }
-            }
-        }
+    private var devices: [AdminBlacklistItem] {
+        api.blacklist.filter { search.isEmpty || $0.hwid.localizedCaseInsensitiveContains(search) || ($0.reason ?? "").localizedCaseInsensitiveContains(search) }
     }
-    
-    private func blacklistCard(_ item: AdminBlacklistItem) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: "slash.circle.fill")
-                    .foregroundColor(.red)
-                
-                Text(item.hwid)
-                    .font(.system(size: 11, weight: .bold, design: .monospaced))
-                    .foregroundColor(.white)
-                    .lineLimit(1)
-                
-                Button(action: {
-                    UIPasteboard.general.string = item.hwid
-                    copiedHWID = item.hwid
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        if copiedHWID == item.hwid { copiedHWID = nil }
+    public var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 20) {
+                StudioHero(eyebrow: "ADMIN / DEVICES", title: "Kiểm soát truy cập.", subtitle: "Quản lý các thiết bị bị chặn và lý do hạn chế truy cập.", icon: "shield.lefthalf.filled")
+                StudioFloatingField(title: "Tìm mã thiết bị hoặc lý do", icon: "magnifyingglass", text: $search)
+                Button { newHWID = ""; reason = ""; formError = ""; showAdd = true } label: {
+                    Label("Chặn thiết bị mới", systemImage: "plus")
+                }.buttonStyle(StudioActionStyle())
+                if !message.isEmpty { Text(message).font(.subheadline).foregroundColor(theme.secondaryText) }
+                if api.isRefreshing && api.lastRefreshed == nil {
+                    ProgressView("Đang tải thiết bị…").padding()
+                } else if let error = api.refreshError, api.lastRefreshed == nil {
+                    StudioEmptyState(title: "Chưa tải được thiết bị", message: error, icon: "wifi.exclamationmark")
+                    Button("Thử lại") { api.fetchData() }.buttonStyle(StudioActionStyle())
+                } else if devices.isEmpty {
+                    StudioEmptyState(title: search.isEmpty ? "Không có thiết bị bị chặn" : "Không tìm thấy thiết bị", message: search.isEmpty ? "Danh sách thiết bị bị hạn chế sẽ xuất hiện tại đây." : "Thử tìm bằng mã thiết bị hoặc lý do khác.", icon: "checkmark.shield")
+                } else {
+                    ForEach(devices) { device in
+                        StudioPanel("Thiết bị bị chặn", icon: "lock.shield") {
+                            Text(device.hwid).font(.subheadline.monospaced()).textSelection(.enabled)
+                            Text(device.reason ?? "Chưa có lý do").font(.subheadline).foregroundColor(theme.secondaryText)
+                            if let date = device.blocked_at { Text(date).font(.caption).foregroundColor(theme.secondaryText) }
+                            HStack {
+                                Button { UIPasteboard.general.string = device.hwid; message = "Đã sao chép mã thiết bị" } label: { Label("Sao chép", systemImage: "doc.on.doc").frame(minHeight: 44) }
+                                Spacer()
+                                Button {
+                                    pendingHWID = device.hwid
+                                    api.unblockHWID(hwid: device.hwid) { success in
+                                        pendingHWID = nil
+                                        message = success ? "Đã bỏ chặn thiết bị" : "Không thể bỏ chặn. Vui lòng thử lại."
+                                    }
+                                } label: {
+                                    HStack { if pendingHWID == device.hwid { ProgressView() }; Text("Bỏ chặn") }.frame(minHeight: 44)
+                                }.disabled(pendingHWID != nil)
+                            }
+                        }
                     }
-                }) {
-                    HStack(spacing: 2) {
-                        Image(systemName: copiedHWID == item.hwid ? "checkmark" : "doc.on.doc")
-                        Text(copiedHWID == item.hwid ? "Đã copy" : "Copy")
-                    }
-                    .font(.system(size: 9, weight: .bold))
-                    .foregroundColor(copiedHWID == item.hwid ? .green : .cyan)
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 3)
-                    .background(Color.cyan.opacity(0.15))
-                    .cornerRadius(6)
                 }
-                
-                Spacer()
-                
-                Button(action: {
-                    api.unblockHWID(hwid: item.hwid) { _ in }
-                }) {
-                    Text("Bỏ Chặn")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(.green)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(Color.green.opacity(0.15))
-                        .cornerRadius(8)
-                }
-            }
-            
-            if let reason = item.reason, !reason.isEmpty {
-                Text("Lý do: \(reason)")
-                    .font(.caption2)
-                    .foregroundColor(.gray)
-            }
-            
-            if let blocked = item.blocked_at, !blocked.isEmpty {
-                Text("Thời gian: \(blocked)")
-                    .font(.caption2)
-                    .foregroundColor(.gray.opacity(0.7))
-            }
-        }
-        .padding(14)
-        .background(Color(red: 0.08, green: 0.10, blue: 0.14))
-        .cornerRadius(14)
-        .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.red.opacity(0.25), lineWidth: 1))
+            }.padding(20).frame(maxWidth: 760).frame(maxWidth: .infinity)
+        }.background(theme.backgroundColor.ignoresSafeArea()).foregroundColor(theme.primaryText)
+            .sheet(isPresented: $showAdd) { addSheet }
+    }
+    private var addSheet: some View {
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 22) {
+                    StudioHero(eyebrow: "ADMIN / RESTRICT", title: "Chặn một thiết bị.", subtitle: "Thiết bị này sẽ không thể truy cập ứng dụng cho đến khi được bỏ chặn.", icon: "lock.shield")
+                    StudioFloatingField(title: "Mã HWID thiết bị", icon: "cpu", text: $newHWID)
+                    StudioFloatingField(title: "Lý do chặn", icon: "text.alignleft", text: $reason)
+                    if !formError.isEmpty { Text(formError).foregroundColor(.red).font(.subheadline) }
+                    Button {
+                        submitting = true; formError = ""
+                        api.blockHWID(hwid: newHWID.trimmingCharacters(in: .whitespacesAndNewlines), reason: reason) { success in
+                            submitting = false
+                            if success { showAdd = false; message = "Đã chặn thiết bị" }
+                            else { formError = "Không thể chặn thiết bị. Kiểm tra kết nối rồi thử lại." }
+                        }
+                    } label: { HStack { if submitting { ProgressView() }; Text(submitting ? "Đang cập nhật…" : "Xác nhận chặn") } }
+                        .buttonStyle(StudioActionStyle()).disabled(submitting || newHWID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }.padding(20).frame(maxWidth: 640).frame(maxWidth: .infinity).disabled(submitting)
+            }.background(theme.backgroundColor.ignoresSafeArea()).foregroundColor(theme.primaryText)
+                .navigationTitle("Chặn thiết bị").navigationBarTitleDisplayMode(.inline)
+                .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Đóng") { showAdd = false }.disabled(submitting) } }
+        }.navigationViewStyle(.stack).interactiveDismissDisabled(submitting)
     }
 }

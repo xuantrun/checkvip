@@ -98,7 +98,7 @@ jobs:
           tag_name: 'ui-build-${{ github.run_number }}'
           name: 'Studio UI build ${{ github.run_number }}'
           body: |
-            Updated welcome screen, floating login inputs, startup retry and admin dashboard.
+            Full Studio UI refresh: Shader, Cache, Avatar, previews, settings, guide, account forms, devices and activity. Adaptive light, dark and OLED themes.
             Includes User and Admin IPAs. These unsigned packages require a compatible installation/signing method.
           files: |
             RegMod.ipa

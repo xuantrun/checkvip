@@ -201,7 +201,7 @@ public struct AvatarModView: View {
     
     public var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
+            VStack(spacing: 22) {
                 // Header Banner
                 headerBannerView
                 
@@ -218,16 +218,16 @@ public struct AvatarModView: View {
                 liveAvatarHitboxCanvasCard
                 
                 // 4. XYZ Coordinate Tuning Sliders (Như Bên Cache Chỉnh)
-                xyzTuningSlidersCard
+                StudioDisclosure("Vị trí & tọa độ") { xyzTuningSlidersCard }
                 
                 // 5. Bone & Scale Config Card
-                boneAndScaleConfigCard
+                StudioDisclosure("Khung & tỷ lệ") { boneAndScaleConfigCard }
                 
                 // 6. Big Weapon (Súng To) Card
-                bigWeaponConfigCard
+                StudioDisclosure("Cấu hình vật phẩm") { bigWeaponConfigCard }
                 
                 // 7. Protection & Integrity Options Card
-                protectionOptionsCard
+                StudioDisclosure("Tùy chọn bản dựng") { protectionOptionsCard }
                 
                 // 8. Source File Selection Card
                 sourceFileCard
@@ -243,9 +243,11 @@ public struct AvatarModView: View {
                 Spacer().frame(height: 30)
             }
             .padding(.horizontal, 16)
-            .padding(.top, 12)
+            .padding(.top, 20)
+            .frame(maxWidth: 760).frame(maxWidth: .infinity)
         }
         .background(theme.backgroundColor.ignoresSafeArea())
+        .safeAreaInset(edge: .bottom) { if isBuilding { StudioBusyBar(text: "Đang tạo bản dựng Avatar…") } }
         .navigationTitle(loc.isVN ? "Tạo Avatar" : "Make Avatar")
         .navigationBarTitleDisplayMode(.inline)
         .fileImporter(
@@ -266,75 +268,10 @@ public struct AvatarModView: View {
     
     // MARK: - Header Banner
     private var headerBannerView: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color(red: 0.08, green: 0.12, blue: 0.22),
-                            Color(red: 0.05, green: 0.08, blue: 0.14)
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(
-                            LinearGradient(
-                                colors: [Color.purple.opacity(0.5), Color.cyan.opacity(0.4)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 1.5
-                        )
-                )
-            
-            HStack(spacing: 14) {
-                ZStack {
-                    Circle()
-                        .fill(
-                            RadialGradient(
-                                colors: [Color.purple.opacity(0.35), Color.clear],
-                                center: .center,
-                                startRadius: 4,
-                                endRadius: 26
-                            )
-                        )
-                        .frame(width: 52, height: 52)
-                    
-                    Image(systemName: "figure.arms.open")
-                        .font(.system(size: 26, weight: .bold))
-                        .foregroundColor(.purple)
-                }
-                
-                VStack(alignment: .leading, spacing: 3) {
-                    HStack(spacing: 6) {
-                        Text("MAKE AVATAR MOD")
-                            .font(.system(size: 17, weight: .black, design: .rounded))
-                            .foregroundColor(.white)
-                        
-                        Text("VIP 2")
-                            .font(.system(size: 9, weight: .black))
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(Color.purple)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
-                    }
-                    
-                    Text("Can thiệp Mesh Bone, Antena, Hitbox & Transform qua AssetIndexer")
-                        .font(.system(size: 11))
-                        .foregroundColor(theme.secondaryText)
-                        .lineLimit(2)
-                }
-                
-                Spacer()
-            }
-            .padding(14)
-        }
+        StudioHero(eyebrow: "STUDIO / AVATAR", title: "Thiết kế nhân vật.", subtitle: "Bắt đầu từ một mẫu, xem trước và tạo bản dựng của bạn.", icon: "person.crop.square")
     }
-    
+
+
     // MARK: - Server Status Pill
     private var serverStatusPill: some View {
         HStack(spacing: 8) {
@@ -350,18 +287,18 @@ public struct AvatarModView: View {
             
             HStack(spacing: 4) {
                 Image(systemName: "crown.fill")
-                    .font(.system(size: 10))
+                    .font(.system(size: 12))
                     .foregroundColor(api.isVIP2 ? .purple : .gray)
                 Text(api.isVIP2 ? "Đã Kích Hoạt VIP 2" : "Yêu Cầu VIP 2")
-                    .font(.system(size: 10, weight: .bold))
+                    .font(.system(size: 12, weight: .bold))
                     .foregroundColor(api.isVIP2 ? .purple : .gray)
             }
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 7)
-        .background(Color.white.opacity(0.04))
+        .background(theme.primaryText.opacity(0.04))
         .cornerRadius(10)
-        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white.opacity(0.08), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: 10).stroke(theme.primaryText.opacity(0.08), lineWidth: 1))
     }
     
     // MARK: - 1. Game Version Selector (Shader-Style Interactive Tap Feedback)
@@ -369,7 +306,7 @@ public struct AvatarModView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Image(systemName: "gamecontroller.fill")
-                    .foregroundColor(.cyan)
+                    .foregroundColor(theme.accentColor)
                     .font(.system(size: 13))
                 Text("BẢN GAME MỤC TIÊU")
                     .font(.system(size: 12, weight: .bold))
@@ -395,8 +332,8 @@ public struct AvatarModView: View {
         }
         .padding(14)
         .background(theme.cardBackground)
-        .cornerRadius(16)
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+        .cornerRadius(24)
+        .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
     }
     
     private func gameVersionCardButton(
@@ -429,16 +366,16 @@ public struct AvatarModView: View {
                 }
                 
                 Text(subtitle)
-                    .font(.system(size: 9.5))
+                    .font(.system(size: 12))
                     .foregroundColor(theme.secondaryText)
             }
             .padding(12)
             .frame(maxWidth: .infinity)
-            .background(isSelected ? accentColor.opacity(0.16) : Color.white.opacity(0.04))
-            .cornerRadius(14)
+            .background(isSelected ? accentColor.opacity(0.16) : theme.primaryText.opacity(0.04))
+            .cornerRadius(20)
             .overlay(
-                RoundedRectangle(cornerRadius: 14)
-                    .stroke(isSelected ? accentColor : Color.white.opacity(0.08), lineWidth: isSelected ? 1.8 : 1)
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(isSelected ? accentColor : theme.primaryText.opacity(0.08), lineWidth: isSelected ? 1.8 : 1)
             )
             .shadow(color: isSelected ? accentColor.opacity(0.3) : Color.clear, radius: 6)
         }
@@ -453,10 +390,10 @@ public struct AvatarModView: View {
                     .font(.system(size: 13))
                 Text("1. CHỌN MẪU AVATAR (PRESETS)")
                     .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(.cyan)
+                    .foregroundColor(theme.accentColor)
                 Spacer()
                 Text("1-Chạm kích hoạt")
-                    .font(.system(size: 10))
+                    .font(.system(size: 12))
                     .foregroundColor(theme.secondaryText)
             }
             
@@ -468,8 +405,8 @@ public struct AvatarModView: View {
         }
         .padding(14)
         .background(theme.cardBackground)
-        .cornerRadius(16)
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+        .cornerRadius(24)
+        .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
     }
     
     private func presetCardButton(preset: AvatarPresetItem) -> some View {
@@ -508,7 +445,7 @@ public struct AvatarModView: View {
                     .lineLimit(1)
                 
                 Text(preset.subtitle)
-                    .font(.system(size: 9.5))
+                    .font(.system(size: 12))
                     .foregroundColor(theme.secondaryText)
                     .lineLimit(1)
             }
@@ -518,10 +455,10 @@ public struct AvatarModView: View {
                 preset.color.opacity(0.20) :
                 Color.white.opacity(0.035)
             )
-            .cornerRadius(14)
+            .cornerRadius(20)
             .overlay(
-                RoundedRectangle(cornerRadius: 14)
-                    .stroke(isSelected ? preset.color : Color.white.opacity(0.08), lineWidth: isSelected ? 2.0 : 1)
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(isSelected ? preset.color : theme.primaryText.opacity(0.08), lineWidth: isSelected ? 2.0 : 1)
             )
             .shadow(color: isSelected ? preset.color.opacity(0.4) : Color.clear, radius: 8)
         }
@@ -540,7 +477,7 @@ public struct AvatarModView: View {
                 Spacer()
                 
                 Text("Visual Mannequin")
-                    .font(.system(size: 10))
+                    .font(.system(size: 12))
                     .foregroundColor(theme.secondaryText)
             }
             
@@ -573,8 +510,8 @@ public struct AvatarModView: View {
         }
         .padding(14)
         .background(theme.cardBackground)
-        .cornerRadius(16)
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+        .cornerRadius(24)
+        .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
     }
     
     // MARK: - 4. XYZ Coordinate Tuning Sliders (Chuẩn dpi: X Cao/Thấp, Y Trước/Sau, Z Trái/Phải)
@@ -582,11 +519,11 @@ public struct AvatarModView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: "slider.horizontal.3")
-                    .foregroundColor(.cyan)
+                    .foregroundColor(theme.accentColor)
                     .font(.system(size: 14))
                 Text("3. ĐIỀU CHỈNH TỌA ĐỘ VỊ TRÍ HITBOX (X, Y, Z OFFSET)")
                     .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(.cyan)
+                    .foregroundColor(theme.accentColor)
                 Spacer()
                 
                 Button(action: {
@@ -596,20 +533,20 @@ public struct AvatarModView: View {
                 }) {
                     HStack(spacing: 4) {
                         Image(systemName: "arrow.counterclockwise")
-                            .font(.system(size: 9))
+                            .font(.system(size: 12))
                         Text("Reset Về Mẫu")
-                            .font(.system(size: 9.5, weight: .bold))
+                            .font(.system(size: 12, weight: .bold))
                     }
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
-                    .background(Color.white.opacity(0.08))
+                    .background(theme.primaryText.opacity(0.08))
                     .foregroundColor(.gray)
                     .cornerRadius(6)
                 }
             }
             
             Text("Theo chuẩn Unity AssetIndexer: Trục X điều chỉnh độ cao dọc thân (Đỉnh đầu / Cổ / Ngực / Hông).")
-                .font(.system(size: 10))
+                .font(.system(size: 12))
                 .foregroundColor(theme.secondaryText)
             
             // XYZ Slider Rows (Exact dpi boundaries)
@@ -642,12 +579,12 @@ public struct AvatarModView: View {
                 )
             }
             
-            Divider().background(Color.white.opacity(0.08))
+            Divider().background(theme.primaryText.opacity(0.08))
             
             // 1-Tap Quick Position Markers (Matching dpi index.html lines 575-580)
             VStack(alignment: .leading, spacing: 6) {
                 Text("Vị trí mốc chuẩn (Nhấn để ghim nhanh độ cao Trục X):")
-                    .font(.system(size: 10, weight: .semibold))
+                    .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(.gray)
                 
                 HStack(spacing: 6) {
@@ -661,8 +598,8 @@ public struct AvatarModView: View {
         }
         .padding(14)
         .background(theme.cardBackground)
-        .cornerRadius(16)
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+        .cornerRadius(24)
+        .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
     }
     
     // Helper Slider Row for XYZ
@@ -721,10 +658,10 @@ public struct AvatarModView: View {
             }
         }) {
             Text(title)
-                .font(.system(size: 9, weight: .bold))
+                .font(.system(size: 12, weight: .bold))
                 .padding(.horizontal, 6)
                 .padding(.vertical, 5)
-                .background(isMatch ? Color.cyan : Color.white.opacity(0.06))
+                .background(isMatch ? theme.accentColor : theme.primaryText.opacity(0.06))
                 .foregroundColor(isMatch ? .black : .white)
                 .cornerRadius(6)
         }
@@ -735,32 +672,32 @@ public struct AvatarModView: View {
         VStack(alignment: .leading, spacing: 14) {
             Text("4. CẤU HÌNH HITBOX & BONE")
                 .font(.system(size: 12, weight: .bold))
-                .foregroundColor(.cyan)
+                .foregroundColor(theme.accentColor)
             
             // Bone Name & Parent Hash
             HStack(spacing: 12) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Tên Bone Đích")
-                        .font(.system(size: 10, weight: .semibold))
+                        .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(.gray)
                     TextField("bone_Head", text: $targetBone)
                         .font(.system(size: 12, weight: .bold, design: .monospaced))
                         .foregroundColor(.white)
                         .padding(8)
-                        .background(Color.white.opacity(0.06))
+                        .background(theme.primaryText.opacity(0.06))
                         .cornerRadius(8)
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Parent Bone Hash")
-                        .font(.system(size: 10, weight: .semibold))
+                        .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(.gray)
                     Text("\(parentHash)")
                         .font(.system(size: 12, weight: .bold, design: .monospaced))
-                        .foregroundColor(.cyan)
+                        .foregroundColor(theme.accentColor)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(8)
-                        .background(Color.white.opacity(0.06))
+                        .background(theme.primaryText.opacity(0.06))
                         .cornerRadius(8)
                 }
             }
@@ -774,7 +711,7 @@ public struct AvatarModView: View {
                     Spacer()
                     Text(String(format: "%.2fx", scaleVal))
                         .font(.system(size: 13, weight: .black, design: .monospaced))
-                        .foregroundColor(.cyan)
+                        .foregroundColor(theme.accentColor)
                 }
                 
                 Slider(value: $scaleVal, in: 0.5...5.0, step: 0.05)
@@ -784,10 +721,10 @@ public struct AvatarModView: View {
                     ForEach([1.20, 1.55, 2.00, 3.00, 4.50], id: \.self) { quickVal in
                         Button(action: { scaleVal = quickVal }) {
                             Text(String(format: "%.2fx", quickVal))
-                                .font(.system(size: 10, weight: .bold))
+                                .font(.system(size: 12, weight: .bold))
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
-                                .background(abs(scaleVal - quickVal) < 0.01 ? Color.cyan : Color.white.opacity(0.08))
+                                .background(abs(scaleVal - quickVal) < 0.01 ? theme.accentColor : theme.primaryText.opacity(0.08))
                                 .foregroundColor(abs(scaleVal - quickVal) < 0.01 ? .black : .white)
                                 .cornerRadius(6)
                         }
@@ -814,8 +751,8 @@ public struct AvatarModView: View {
         }
         .padding(14)
         .background(theme.cardBackground)
-        .cornerRadius(16)
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+        .cornerRadius(24)
+        .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
     }
     
     // MARK: - 6. Big Weapon (Súng To) Card
@@ -850,14 +787,14 @@ public struct AvatarModView: View {
                 }
             } else {
                 Text("Bật để phóng to vũ khí cầm tay và đeo lưng, tạo hiệu ứng thị giác hoành tráng.")
-                    .font(.system(size: 10.5))
+                    .font(.system(size: 12))
                     .foregroundColor(.gray)
             }
         }
         .padding(14)
         .background(theme.cardBackground)
-        .cornerRadius(16)
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(modBigGun ? Color.orange.opacity(0.4) : theme.cardBorder, lineWidth: 1))
+        .cornerRadius(24)
+        .overlay(RoundedRectangle(cornerRadius: 24).stroke(modBigGun ? Color.orange.opacity(0.4) : theme.cardBorder, lineWidth: 1))
     }
     
     // MARK: - 7. Protection & Integrity Options Card
@@ -874,13 +811,13 @@ public struct AvatarModView: View {
                             .font(.system(size: 11.5, weight: .bold))
                             .foregroundColor(.white)
                         Text("Auto-unobfuscate 2018.4.12f1 -> 2022.3.47f1 khi mod, re-spoof về 2018.4.12f1 và đệm byte 0x00 chuẩn 46,096 bytes")
-                            .font(.system(size: 9.5))
+                            .font(.system(size: 12))
                             .foregroundColor(.gray)
                     }
                 }
                 .toggleStyle(SwitchToggleStyle(tint: .green))
                 
-                Divider().background(Color.white.opacity(0.08))
+                Divider().background(theme.primaryText.opacity(0.08))
                 
                 Toggle(isOn: $patchMono) {
                     VStack(alignment: .leading, spacing: 2) {
@@ -888,7 +825,7 @@ public struct AvatarModView: View {
                             .font(.system(size: 11.5, weight: .bold))
                             .foregroundColor(.white)
                         Text("Đồng bộ Assembly-CSharp.dll tương thích môi trường runtime iOS")
-                            .font(.system(size: 9.5))
+                            .font(.system(size: 12))
                             .foregroundColor(.gray)
                     }
                 }
@@ -897,8 +834,8 @@ public struct AvatarModView: View {
         }
         .padding(14)
         .background(theme.cardBackground)
-        .cornerRadius(16)
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+        .cornerRadius(24)
+        .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
     }
     
     // MARK: - 8. Source File Selection Card
@@ -906,12 +843,12 @@ public struct AvatarModView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text("7. FILE NGUỒN ASSETINDEXER")
                 .font(.system(size: 12, weight: .bold))
-                .foregroundColor(.cyan)
+                .foregroundColor(theme.accentColor)
             
             HStack(spacing: 10) {
                 Image(systemName: "doc.zipper")
                     .font(.system(size: 20))
-                    .foregroundColor(.cyan)
+                    .foregroundColor(theme.accentColor)
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(customFileName ?? "assetindexer.U6Zffc4YIR3DslNj3cXvYGAqz58~3D")
@@ -920,7 +857,7 @@ public struct AvatarModView: View {
                         .lineLimit(1)
                     
                     Text(customFileData != nil ? "File tùy chỉnh từ máy (\(customFileData!.count) bytes)" : "File gốc mặc định trên máy chủ VPS (46,096 bytes)")
-                        .font(.system(size: 9.5))
+                        .font(.system(size: 12))
                         .foregroundColor(customFileData != nil ? .green : .gray)
                 }
                 
@@ -938,7 +875,7 @@ public struct AvatarModView: View {
                         .font(.system(size: 11, weight: .bold))
                         .padding(.horizontal, 10)
                         .padding(.vertical, 6)
-                        .background(customFileData != nil ? Color.gray.opacity(0.3) : Color.cyan.opacity(0.2))
+                        .background(customFileData != nil ? Color.gray.opacity(0.3) : theme.accentColor.opacity(0.2))
                         .foregroundColor(customFileData != nil ? .white : .cyan)
                         .cornerRadius(8)
                 }
@@ -946,84 +883,26 @@ public struct AvatarModView: View {
         }
         .padding(14)
         .background(theme.cardBackground)
-        .cornerRadius(16)
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+        .cornerRadius(24)
+        .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
     }
     
     // MARK: - 9. Action Buttons Card
     private var actionButtonsCard: some View {
-        VStack(spacing: 12) {
-            // Main Make Button
+        StudioPanel("Bản dựng Avatar", icon: "arrow.down.doc") {
             Button(action: buildAvatarViaAPI) {
-                HStack(spacing: 8) {
-                    if isBuilding {
-                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .black))
-                        Text("ĐANG XỬ LÝ QUA VPS...")
-                            .font(.system(size: 14, weight: .black))
-                    } else {
-                        Image(systemName: "crown.fill")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.yellow)
-                        Text("🚀 TẠO FILE AVATAR (VIP 2 API)")
-                            .font(.system(size: 14, weight: .black))
-                    }
-                }
-                .foregroundColor(.black)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(
-                    LinearGradient(
-                        colors: [Color.cyan, Color(red: 0.6, green: 0.3, blue: 1.0)],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
-                .cornerRadius(14)
-                .shadow(color: Color.purple.opacity(0.4), radius: 10, y: 4)
-            }
-            .disabled(isBuilding)
-            
-            // Post-build actions: 1-Click Install & Share Sheet
-            if let _ = builtData {
-                VStack(spacing: 10) {
-                    HStack(spacing: 10) {
-                        // 1-Click Install
-                        Button(action: directInstallToGame) {
-                            HStack(spacing: 6) {
-                                Image(systemName: "bolt.fill")
-                                Text("CÀI VÀO GAME (\(selectedGame == .fft ? "FFT" : "FFM"))")
-                            }
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(Color.green)
-                            .cornerRadius(10)
-                        }
-                        
-                        // Share Sheet / Save to Files
-                        Button(action: shareBuiltFile) {
-                            HStack(spacing: 6) {
-                                Image(systemName: "square.and.arrow.up")
-                                Text("LƯU VÀO TỆP")
-                            }
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                        }
-                    }
-                }
-                .padding(12)
-                .background(Color.green.opacity(0.1))
-                .cornerRadius(14)
-                .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.green.opacity(0.3), lineWidth: 1))
+                Label(isBuilding ? "Đang tạo bản dựng…" : "Tạo Avatar", systemImage: "sparkles")
+            }.buttonStyle(StudioActionStyle()).disabled(isBuilding)
+            if builtData != nil {
+                Label("Bản dựng đã sẵn sàng", systemImage: "checkmark.circle.fill").font(.subheadline).foregroundColor(.green)
+                Button(action: shareBuiltFile) { Label("Lưu hoặc chia sẻ", systemImage: "square.and.arrow.up") }
+                    .buttonStyle(StudioActionStyle(secondary: true)).disabled(isBuilding)
+                Button(action: directInstallToGame) { Label("Cài vào game", systemImage: "square.and.arrow.down") }
+                    .buttonStyle(StudioActionStyle(secondary: true)).disabled(isBuilding)
             }
         }
     }
-    
+
     // MARK: - 10. Changes Log Card (Hiển thị kiểu đã chọn, chỉnh gì & Done file)
     private var changesLogCard: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -1035,7 +914,7 @@ public struct AvatarModView: View {
                     .foregroundColor(.green)
                 Spacer()
                 Text("Done File")
-                    .font(.system(size: 10, weight: .bold))
+                    .font(.system(size: 12, weight: .bold))
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
                     .background(Color.green.opacity(0.18))
@@ -1043,7 +922,7 @@ public struct AvatarModView: View {
                     .cornerRadius(4)
             }
             
-            Divider().background(Color.white.opacity(0.08))
+            Divider().background(theme.primaryText.opacity(0.08))
             
             ForEach(appliedChanges, id: \.self) { change in
                 let isDone = change.contains("Done file")
@@ -1052,13 +931,13 @@ public struct AvatarModView: View {
                         .foregroundColor(isDone ? .green : .cyan)
                         .font(.system(size: 11))
                     Text(change)
-                        .font(.system(size: 10.5, weight: isDone ? .bold : .medium))
-                        .foregroundColor(isDone ? .green : .white.opacity(0.95))
+                        .font(.system(size: 12, weight: isDone ? .bold : .medium))
+                        .foregroundColor(isDone ? .green : theme.primaryText)
                 }
             }
         }
         .padding(12)
-        .background(Color(red: 0.06, green: 0.08, blue: 0.12))
+        .background(theme.cardBackground)
         .cornerRadius(12)
         .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.green.opacity(0.25), lineWidth: 1))
     }

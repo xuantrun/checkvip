@@ -149,10 +149,12 @@ public struct GunPreviewCanvas: View {
         }
         .frame(height: 220)
         .background(Color(red: 0.04, green: 0.05, blue: 0.08))
-        .cornerRadius(16)
+        .cornerRadius(24)
         .overlay(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: 24)
                 .stroke(Color.white.opacity(0.1), lineWidth: 1)
         )
+        .accessibilityLabel("Xem trước Shader với màu súng và nền đang chọn")
+        .accessibilityValue("Độ dày viền \(String(format: "%.1f", outlineWidth))")
     }
 }

@@ -72,14 +72,14 @@ public struct AvatarPreviewCanvas: View {
     }
     
     public var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 16) {
             // Header Bar
             HStack {
                 HStack(spacing: 5) {
                     Image(systemName: "figure.walk")
                         .foregroundColor(.cyan)
-                    Text("SƠ ĐỒ XƯƠNG TƯƠNG TÁC (BONE VISUALIZER)")
-                        .font(.system(size: 11, weight: .bold))
+                    Text("Xem trước Avatar")
+                        .font(.subheadline.weight(.semibold))
                         .foregroundColor(.cyan)
                 }
                 
@@ -416,8 +416,8 @@ public struct AvatarPreviewCanvas: View {
                 }
             }
             .frame(height: 340)
-            .cornerRadius(16)
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.1), lineWidth: 1))
+            .cornerRadius(24)
+            .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.white.opacity(0.1), lineWidth: 1))
             
             // Instruction Hint
             Text("💡 Bấm trực tiếp vào HEAD / NECK / BODY / HIPS / LEGS / ARMS trên sơ đồ để chọn!")

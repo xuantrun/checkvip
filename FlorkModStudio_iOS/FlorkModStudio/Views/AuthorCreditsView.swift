@@ -13,8 +13,9 @@ public struct AuthorCreditsView: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 20) {
+                StudioHero(eyebrow: "STUDIO / CONNECT", title: "Cùng xây dựng Studio.", subtitle: "Thông tin tác giả và kênh hỗ trợ của ứng dụng.", icon: "bubble.left.and.bubble.right")
                 // Header Scenic Banner
-                VStack(spacing: 16) {
+                VStack(spacing: 22) {
                     if let uiImg = UIImage(named: "admin_avatar") ?? (Bundle.main.path(forResource: "admin_avatar", ofType: "png").flatMap { UIImage(contentsOfFile: $0) }) {
                         Image(uiImage: uiImg)
                             .resizable()
@@ -25,19 +26,19 @@ public struct AuthorCreditsView: View {
                                 Circle()
                                     .stroke(
                                         LinearGradient(
-                                            colors: [Color.cyan, Color.purple],
+                                            colors: [theme.accentColor, Color.purple],
                                             startPoint: .topLeading,
                                             endPoint: .bottomTrailing
                                         ),
                                         lineWidth: 2.5
                                     )
                             )
-                            .shadow(color: Color.cyan.opacity(0.5), radius: 14, y: 6)
+                            .shadow(color: theme.accentColor.opacity(0.5), radius: 14, y: 6)
                             .padding(.top, 16)
                     } else {
                         Image(systemName: "person.crop.circle.fill")
                             .font(.system(size: 80))
-                            .foregroundColor(.cyan)
+                            .foregroundColor(theme.accentColor)
                             .padding(.top, 16)
                     }
                     
@@ -61,7 +62,7 @@ public struct AuthorCreditsView: View {
                                 .scaledToFill()
                                 .frame(width: 46, height: 46)
                                 .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.cyan.opacity(0.7), lineWidth: 1.5))
+                                .overlay(Circle().stroke(theme.accentColor.opacity(0.7), lineWidth: 1.5))
                         } else {
                             Circle()
                                 .fill(LinearGradient(colors: [.blue, .cyan], startPoint: .topLeading, endPoint: .bottomTrailing))
@@ -79,17 +80,17 @@ public struct AuthorCreditsView: View {
                                 .foregroundColor(theme.primaryText)
                             Text(telegramUsername)
                                 .font(.caption)
-                                .foregroundColor(.cyan)
+                                .foregroundColor(theme.accentColor)
                         }
                         
                         Spacer()
                         
                         Text("AUTHOR")
-                            .font(.system(size: 10, weight: .black))
+                            .font(.system(size: 12, weight: .black))
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
-                            .background(Color.cyan.opacity(0.15))
-                            .foregroundColor(.cyan)
+                            .background(theme.accentColor.opacity(0.15))
+                            .foregroundColor(theme.accentColor)
                             .clipShape(Capsule())
                     }
                     
@@ -120,8 +121,8 @@ public struct AuthorCreditsView: View {
                                 endPoint: .trailing
                             )
                         )
-                        .cornerRadius(14)
-                        .shadow(color: Color.cyan.opacity(0.35), radius: 8, y: 4)
+                        .cornerRadius(20)
+                        .shadow(color: theme.accentColor.opacity(0.35), radius: 8, y: 4)
                     }
                     
                     // Copy username button
@@ -187,13 +188,13 @@ public struct AuthorCreditsView: View {
                         Text("© 2026 CheatiOS Vip")
                             .font(.caption)
                             .fontWeight(.bold)
-                            .foregroundColor(.cyan)
+                            .foregroundColor(theme.accentColor)
                     }
                 }
                 .padding(16)
                 .background(theme.cardBackground)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(theme.cardBorder, lineWidth: 1))
+                .cornerRadius(24)
+                .overlay(RoundedRectangle(cornerRadius: 24).stroke(theme.cardBorder, lineWidth: 1))
                 .padding(.horizontal)
             }
             .padding(.bottom, 30)

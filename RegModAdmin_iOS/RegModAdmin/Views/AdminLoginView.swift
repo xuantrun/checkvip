@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct AdminLoginView: View {
+    @ObservedObject private var theme = ThemeManager.shared
     @ObservedObject var api = AdminAPIService.shared
     @State private var password: String = ""
     @State private var isPasswordVisible: Bool = false
@@ -10,7 +11,7 @@ public struct AdminLoginView: View {
     
     public var body: some View {
         ZStack {
-            Color(red: 0.05, green: 0.06, blue: 0.09)
+            theme.backgroundColor
                 .ignoresSafeArea()
             
             ScrollView {
@@ -18,7 +19,7 @@ public struct AdminLoginView: View {
                     Spacer().frame(height: 30)
                     
                     // Header Artwork
-                    VStack(spacing: 16) {
+                    VStack(spacing: 22) {
                         Image("game_cover_fft")
                             .resizable()
                             .scaledToFill()
@@ -40,7 +41,7 @@ public struct AdminLoginView: View {
                         VStack(spacing: 6) {
                             Text("Chào mừng, Admin")
                                 .font(.system(size: 24, weight: .black, design: .rounded))
-                                .foregroundColor(.white)
+                                .foregroundColor(theme.primaryText)
                             
                             Text("Quản lý tài khoản và hoạt động trong một nơi.")
                                 .font(.caption)
@@ -58,7 +59,7 @@ public struct AdminLoginView: View {
                         }
                         .padding(.horizontal, 12)
                         .padding(.vertical, 5)
-                        .background(Color.white.opacity(0.06))
+                        .background(theme.primaryText.opacity(0.06))
                         .clipShape(Capsule())
                     }
                     
@@ -89,18 +90,18 @@ public struct AdminLoginView: View {
                                 }
                                 Text(api.isLoading ? "Đang xác thực…" : "Vào trang quản trị")
                                     .font(.system(size: 15, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(theme.primaryText)
                             }
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 15)
                             .background(
                                 LinearGradient(
-                                    colors: [Color.red, Color.orange],
+                                    colors: [theme.accentColor, theme.accentColor.opacity(0.8)],
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
                             )
-                            .cornerRadius(14)
+                            .cornerRadius(20)
                             .shadow(color: Color.red.opacity(0.4), radius: 10, y: 4)
                         }
                         .disabled(api.isLoading || password.isEmpty)
@@ -108,9 +109,9 @@ public struct AdminLoginView: View {
 
                     }
                     .padding(20)
-                    .background(Color(red: 0.08, green: 0.10, blue: 0.14))
+                    .background(theme.cardBackground)
                     .cornerRadius(20)
-                    .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.white.opacity(0.08), lineWidth: 1))
+                    .overlay(RoundedRectangle(cornerRadius: 20).stroke(theme.primaryText.opacity(0.08), lineWidth: 1))
                     .padding(.horizontal)
                     
                     Spacer()
@@ -119,7 +120,7 @@ public struct AdminLoginView: View {
                 .frame(maxWidth: .infinity)
             }
         }
-        .accentColor(.orange)
+        .accentColor(theme.accentColor)
     }
     
     private func performLogin() {
@@ -183,8 +184,8 @@ struct StudioFloatingField: View {
         .padding(.horizontal, 14)
         .frame(minHeight: 66)
         .background(Color.primary.opacity(0.045))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16)
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .overlay(RoundedRectangle(cornerRadius: 24)
             .stroke(focused ? Color.accentColor : Color.primary.opacity(0.12), lineWidth: focused ? 1.5 : 1))
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: raised)
     }

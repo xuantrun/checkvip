@@ -30,44 +30,11 @@ public struct HitboxPreviewCanvas: View {
     
     public var body: some View {
         VStack(spacing: 10) {
-            // View Mode Selector
             HStack {
-                Button(action: { viewMode = 0 }) {
-                    HStack(spacing: 5) {
-                        Image(systemName: "person.crop.rectangle.fill")
-                        Text("Hình Ảnh Nhân Vật")
-                    }
-                    .font(.system(size: 11, weight: .bold))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(viewMode == 0 ? Color.cyan.opacity(0.3) : Color.white.opacity(0.06))
-                    .foregroundColor(viewMode == 0 ? .cyan : .gray)
-                    .cornerRadius(8)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(viewMode == 0 ? Color.cyan.opacity(0.8) : Color.clear, lineWidth: 1)
-                    )
-                }
-                
-                Button(action: { viewMode = 1 }) {
-                    HStack(spacing: 5) {
-                        Image(systemName: "dot.radiowaves.left.and.right")
-                        Text("Radar Khung Xương")
-                    }
-                    .font(.system(size: 11, weight: .bold))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(viewMode == 1 ? Color.purple.opacity(0.3) : Color.white.opacity(0.06))
-                    .foregroundColor(viewMode == 1 ? .purple : .gray)
-                    .cornerRadius(8)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(viewMode == 1 ? Color.purple.opacity(0.8) : Color.clear, lineWidth: 1)
-                    )
-                }
-                
-                Spacer()
-                
+                Picker("Chế độ xem trước", selection: $viewMode) {
+                    Text("Nhân vật").tag(0)
+                    Text("Sơ đồ 2D").tag(1)
+                }.pickerStyle(.segmented)
                 // Status badge
                 Text(headCenterX > 0.08 ? "BẮN BỤNG=HEAD" : (headRadius > 0.09 ? "ĐẦU TO +68%" : (spineRadius > 0.5 ? "MAGIC BULLET" : "CHUẨN GỐC")))
                     .font(.system(size: 9, weight: .heavy))
@@ -81,7 +48,7 @@ public struct HitboxPreviewCanvas: View {
             // Canvas / Character View Frame
             ZStack {
                 // Background Container
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: 24)
                     .fill(Color(red: 0.04, green: 0.05, blue: 0.08))
                 
                 // Background Grid Lines
@@ -273,9 +240,9 @@ public struct HitboxPreviewCanvas: View {
                 }
             }
             .frame(height: 270)
-            .cornerRadius(16)
+            .cornerRadius(24)
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: 24)
                     .stroke(Color.white.opacity(0.12), lineWidth: 1)
             )
         }

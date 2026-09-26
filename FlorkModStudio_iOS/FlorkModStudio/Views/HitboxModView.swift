@@ -135,6 +135,7 @@ public struct HitboxModView: View {
     @State private var activeTab: String = "head"
     
     @State private var isProcessing: Bool = false
+    @State private var initializedPreset = false
     @State private var alertMessage: String = ""
     @State private var showAlert: Bool = false
     @State private var showLoginSheet: Bool = false
@@ -146,7 +147,7 @@ public struct HitboxModView: View {
             theme.backgroundColor.ignoresSafeArea()
             
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 16) {
+                VStack(spacing: 22) {
                     
                     // 1. HERO CYBER STATUS BANNER
                     heroCyberBanner
@@ -164,7 +165,7 @@ public struct HitboxModView: View {
                     quickPresetsSection
                     
                     // 6. FINE-TUNING CONTROLLER (SLIDERS WITH STEPPERS)
-                    fineTuningSlidersSection
+                    StudioDisclosure("Tinh chỉnh nâng cao") { fineTuningSlidersSection }
                     
                     // 7. BOTTOM ACTION HUB
                     bottomActionHubSection
@@ -172,15 +173,18 @@ public struct HitboxModView: View {
                     Spacer().frame(height: 28)
                 }
                 .padding(.horizontal, 16)
-                .padding(.top, 12)
+                .padding(.top, 20)
+                .frame(maxWidth: 760).frame(maxWidth: .infinity)
             }
         }
         .background(theme.backgroundColor)
-        .navigationTitle("Cache_res")
+        .safeAreaInset(edge: .bottom) { if isProcessing { StudioBusyBar(text: "Đang xử lý bản dựng Cache…") } }
+        .navigationTitle("Cache Studio")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             refreshLocalFiles()
-            if let firstPreset = HitboxConfig.defaultPresets.first {
+            if !initializedPreset, let firstPreset = HitboxConfig.defaultPresets.first {
+                initializedPreset = true
                 applyPreset(firstPreset)
             }
         }
@@ -195,87 +199,16 @@ public struct HitboxModView: View {
     
     // MARK: - 1. Hero Cyber Status Banner
     private var heroCyberBanner: some View {
-        HStack(spacing: 14) {
-            ZStack {
-                Circle()
-                    .fill(
-                        RadialGradient(
-                            colors: [Color.cyan.opacity(0.35), Color.clear],
-                            center: .center,
-                            startRadius: 2,
-                            endRadius: 24
-                        )
-                    )
-                    .frame(width: 46, height: 46)
-                
-                Image(systemName: "cpu.fill")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(theme.neonCyan)
-            }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 6) {
-                    Text("Cache_res")
-                        .font(.system(size: 16, weight: .black, design: .rounded))
-                        .foregroundColor(theme.primaryText)
-                    
-                    // Icon Pre (Premium VIP badge)
-                    HStack(spacing: 3) {
-                        Image(systemName: "crown.fill")
-                            .font(.system(size: 9, weight: .bold))
-                            .foregroundColor(.yellow)
-                        Text("PRE")
-                            .font(.system(size: 9, weight: .heavy))
-                            .foregroundColor(.yellow)
-                    }
-                    .padding(.horizontal, 7)
-                    .padding(.vertical, 2.5)
-                    .background(Color.yellow.opacity(0.18))
-                    .clipShape(Capsule())
-                    .overlay(Capsule().stroke(Color.yellow.opacity(0.4), lineWidth: 1))
-                }
-                
-                Text("MeoMeoCheat")
-                    .font(.system(size: 10, weight: .medium))
-                    .foregroundColor(theme.secondaryText)
-            }
-            
-            Spacer()
-            
-            // Server status indicator pill
-            HStack(spacing: 5) {
-                Circle()
-                    .fill(api.isOnline ? Color.green : Color.red)
-                    .frame(width: 7, height: 7)
-                Text(api.isOnline ? "ONLINE" : "OFFLINE")
-                    .font(.system(size: 9, weight: .heavy))
-                    .foregroundColor(api.isOnline ? .green : .red)
-            }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 5)
-            .background(Color.white.opacity(0.06))
-            .clipShape(Capsule())
-            .overlay(Capsule().stroke(Color.white.opacity(0.1), lineWidth: 1))
-        }
-        .padding(14)
-        .background(
-            LinearGradient(
-                colors: [Color(red: 0.10, green: 0.14, blue: 0.24), Color(red: 0.08, green: 0.10, blue: 0.18)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
-        .cornerRadius(18)
-        .overlay(RoundedRectangle(cornerRadius: 18).stroke(Color.cyan.opacity(0.25), lineWidth: 1))
-        .shadow(color: Color.black.opacity(0.3), radius: 8, y: 4)
+        StudioHero(eyebrow: "STUDIO / CACHE", title: "Không gian cấu hình.", subtitle: "Chọn nguồn tệp, xem trước và tinh chỉnh theo nhu cầu.", icon: "square.stack.3d.up")
     }
-    
+
+
     // MARK: - 2. Game Version Selector
     private var gameVersionSelectorSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Image(systemName: "gamecontroller.fill")
-                    .foregroundColor(theme.neonCyan)
+                    .foregroundColor(theme.accentColor)
                 Text("Phiên Bản Free Fire Mục Tiêu")
                     .font(.system(size: 13, weight: .bold))
                     .foregroundColor(theme.primaryText)
@@ -299,25 +232,25 @@ public struct HitboxModView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(ver == .fft ? "FF Thường" : "FF MAX")
                                     .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(selectedVersion == ver ? theme.neonCyan : theme.primaryText)
+                                    .foregroundColor(selectedVersion == ver ? theme.accentColor : theme.primaryText)
                                 Text(ver == .fft ? "com.dts.freefireth" : "com.dts.freefiremax")
-                                    .font(.system(size: 8, design: .monospaced))
+                                    .font(.system(size: 12, design: .monospaced))
                                     .foregroundColor(theme.secondaryText)
                                     .lineLimit(1)
                             }
                             Spacer()
                             if selectedVersion == ver {
                                 Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(theme.neonCyan)
+                                    .foregroundColor(theme.accentColor)
                                     .font(.system(size: 16))
                             }
                         }
                         .padding(10)
-                        .background(selectedVersion == ver ? theme.neonCyan.opacity(0.12) : Color.white.opacity(0.04))
-                        .cornerRadius(14)
+                        .background(selectedVersion == ver ? theme.accentColor.opacity(0.12) : theme.primaryText.opacity(0.04))
+                        .cornerRadius(20)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .stroke(selectedVersion == ver ? theme.neonCyan : Color.white.opacity(0.08), lineWidth: 1.2)
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(selectedVersion == ver ? theme.accentColor : theme.primaryText.opacity(0.08), lineWidth: 1.2)
                         )
                     }
                 }
@@ -334,7 +267,7 @@ public struct HitboxModView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: "internaldrive.fill")
-                    .foregroundColor(theme.neonCyan)
+                    .foregroundColor(theme.accentColor)
                 Text("Nguồn File Cache Mục Tiêu (cache_res)")
                     .font(.system(size: 13, weight: .bold))
                     .foregroundColor(theme.primaryText)
@@ -343,15 +276,15 @@ public struct HitboxModView: View {
                 // Active status tag
                 HStack(spacing: 4) {
                     Circle()
-                        .fill(cacheSourceType == "server" ? Color.cyan : Color.green)
+                        .fill(cacheSourceType == "server" ? theme.accentColor : Color.green)
                         .frame(width: 6, height: 6)
                     Text(cacheSourceType == "server" ? "MÁY CHỦ GỐC" : (cacheSourceType == "game" ? "TRỰC TIẾP GAME" : "TỆP THIẾT BỊ"))
-                        .font(.system(size: 8, weight: .black))
+                        .font(.system(size: 12, weight: .black))
                         .foregroundColor(cacheSourceType == "server" ? .cyan : .green)
                 }
                 .padding(.horizontal, 7)
                 .padding(.vertical, 3)
-                .background(cacheSourceType == "server" ? Color.cyan.opacity(0.15) : Color.green.opacity(0.15))
+                .background(cacheSourceType == "server" ? theme.accentColor.opacity(0.15) : Color.green.opacity(0.15))
                 .clipShape(Capsule())
             }
             
@@ -359,11 +292,11 @@ public struct HitboxModView: View {
             HStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(userCacheData != nil ? Color.green.opacity(0.15) : Color.cyan.opacity(0.15))
+                        .fill(userCacheData != nil ? Color.green.opacity(0.15) : theme.accentColor.opacity(0.15))
                         .frame(width: 40, height: 40)
                     Image(systemName: userCacheData != nil ? "doc.badge.gearshape.fill" : "server.rack")
                         .font(.system(size: 17))
-                        .foregroundColor(userCacheData != nil ? .green : theme.neonCyan)
+                        .foregroundColor(userCacheData != nil ? .green : theme.accentColor)
                 }
                 
                 VStack(alignment: .leading, spacing: 2) {
@@ -374,13 +307,13 @@ public struct HitboxModView: View {
                     
                     HStack(spacing: 6) {
                         Text("\(userCacheFileSize) Bytes")
-                            .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                            .font(.system(size: 12, weight: .semibold, design: .monospaced))
                             .foregroundColor(userCacheData != nil ? .green : theme.secondaryText)
                         Text("•")
-                            .font(.system(size: 8))
+                            .font(.system(size: 12))
                             .foregroundColor(theme.secondaryText)
                         Text(userCacheData != nil ? "Đã nạp vào bộ nhớ" : "Sẵn sàng build từ máy chủ")
-                            .font(.system(size: 10))
+                            .font(.system(size: 12))
                             .foregroundColor(theme.secondaryText)
                     }
                 }
@@ -398,11 +331,11 @@ public struct HitboxModView: View {
                 }
             }
             .padding(11)
-            .background(Color.white.opacity(0.04))
+            .background(theme.primaryText.opacity(0.04))
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(userCacheData != nil ? Color.green.opacity(0.4) : Color.cyan.opacity(0.25), lineWidth: 1)
+                    .stroke(userCacheData != nil ? Color.green.opacity(0.4) : theme.accentColor.opacity(0.25), lineWidth: 1)
             )
             
             // 3 Source Selector Action Buttons
@@ -417,16 +350,16 @@ public struct HitboxModView: View {
                         Image(systemName: "cloud.fill")
                             .font(.system(size: 14))
                         Text("Mặc Định Gốc")
-                            .font(.system(size: 10, weight: .bold))
+                            .font(.system(size: 12, weight: .bold))
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)
-                    .background(cacheSourceType == "server" ? Color.cyan.opacity(0.25) : Color.cyan.opacity(0.08))
-                    .foregroundColor(.cyan)
+                    .background(cacheSourceType == "server" ? theme.accentColor.opacity(0.25) : theme.accentColor.opacity(0.08))
+                    .foregroundColor(theme.accentColor)
                     .cornerRadius(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.cyan.opacity(cacheSourceType == "server" ? 0.7 : 0.25), lineWidth: 1.2)
+                            .stroke(theme.accentColor.opacity(cacheSourceType == "server" ? 0.7 : 0.25), lineWidth: 1.2)
                     )
                 }
                 
@@ -438,7 +371,7 @@ public struct HitboxModView: View {
                         Image(systemName: "folder.fill")
                             .font(.system(size: 14))
                         Text("Chọn Từ Tệp")
-                            .font(.system(size: 10, weight: .bold))
+                            .font(.system(size: 12, weight: .bold))
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)
@@ -459,7 +392,7 @@ public struct HitboxModView: View {
                         Image(systemName: "bolt.horizontal.fill")
                             .font(.system(size: 14))
                         Text("Lấy Từ Game")
-                            .font(.system(size: 10, weight: .bold))
+                            .font(.system(size: 12, weight: .bold))
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)
@@ -481,14 +414,14 @@ public struct HitboxModView: View {
                             .font(.system(size: 11))
                             .foregroundColor(.orange)
                         Text("Tệp có sẵn trong thư mục app 'Build File' (\(localFiles.count))")
-                            .font(.system(size: 10, weight: .bold))
+                            .font(.system(size: 12, weight: .bold))
                             .foregroundColor(theme.primaryText)
                         Spacer()
                         Button(action: {
                             withAnimation { showLocalFilesList.toggle() }
                         }) {
                             Text(showLocalFilesList ? "Thu gọn" : "Xem")
-                                .font(.system(size: 9, weight: .bold))
+                                .font(.system(size: 12, weight: .bold))
                                 .foregroundColor(.orange)
                         }
                     }
@@ -503,7 +436,7 @@ public struct HitboxModView: View {
                                             .foregroundColor(theme.primaryText)
                                             .lineLimit(1)
                                         Text("\(file.size) bytes")
-                                            .font(.system(size: 9, design: .monospaced))
+                                            .font(.system(size: 12, design: .monospaced))
                                             .foregroundColor(theme.secondaryText)
                                     }
                                     Spacer()
@@ -511,7 +444,7 @@ public struct HitboxModView: View {
                                         loadLocalAppFile(file)
                                     }) {
                                         Text("Nạp")
-                                            .font(.system(size: 10, weight: .heavy))
+                                            .font(.system(size: 12, weight: .heavy))
                                             .padding(.horizontal, 10)
                                             .padding(.vertical, 4)
                                             .background(Color.orange.opacity(0.2))
@@ -520,7 +453,7 @@ public struct HitboxModView: View {
                                     }
                                 }
                                 .padding(8)
-                                .background(Color.white.opacity(0.03))
+                                .background(theme.primaryText.opacity(0.03))
                                 .cornerRadius(8)
                             }
                         }
@@ -550,7 +483,7 @@ public struct HitboxModView: View {
                 Spacer()
                 
                 Text("Vùng Trúng Đạn")
-                    .font(.system(size: 10))
+                    .font(.system(size: 12))
                     .foregroundColor(theme.secondaryText)
             }
             
@@ -602,27 +535,27 @@ public struct HitboxModView: View {
                                 HStack {
                                     Text(preset.title)
                                         .font(.system(size: 13, weight: .bold))
-                                        .foregroundColor(selectedPresetId == preset.id ? theme.neonCyan : theme.primaryText)
+                                        .foregroundColor(selectedPresetId == preset.id ? theme.accentColor : theme.primaryText)
                                     Spacer()
                                     if selectedPresetId == preset.id {
                                         Image(systemName: "checkmark.seal.fill")
-                                            .foregroundColor(theme.neonCyan)
+                                            .foregroundColor(theme.accentColor)
                                             .font(.system(size: 14))
                                     }
                                 }
                                 Text(preset.desc)
-                                    .font(.system(size: 10))
+                                    .font(.system(size: 12))
                                     .foregroundColor(theme.secondaryText)
                                     .lineLimit(2)
                             }
                         }
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
-                        .background(selectedPresetId == preset.id ? theme.neonCyan.opacity(0.08) : Color.white.opacity(0.03))
+                        .background(selectedPresetId == preset.id ? theme.accentColor.opacity(0.08) : theme.primaryText.opacity(0.03))
                         .cornerRadius(12)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(selectedPresetId == preset.id ? theme.neonCyan.opacity(0.6) : Color.clear, lineWidth: 1)
+                                .stroke(selectedPresetId == preset.id ? theme.accentColor.opacity(0.6) : Color.clear, lineWidth: 1)
                         )
                     }
                 }
@@ -639,7 +572,7 @@ public struct HitboxModView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: "slider.horizontal.3")
-                    .foregroundColor(theme.neonCyan)
+                    .foregroundColor(theme.accentColor)
                 Text("Tinh Chỉnh Tọa Độ Nhị Phân")
                     .font(.system(size: 13, weight: .bold))
                     .foregroundColor(theme.primaryText)
@@ -647,7 +580,7 @@ public struct HitboxModView: View {
                 Toggle("", isOn: $syncGender)
                     .labelsHidden()
                 Text("Đồng bộ")
-                    .font(.system(size: 10, weight: .bold))
+                    .font(.system(size: 12, weight: .bold))
                     .foregroundColor(theme.secondaryText)
             }
             
@@ -693,84 +626,22 @@ public struct HitboxModView: View {
     
     // MARK: - 7. Bottom Action Hub
     private var bottomActionHubSection: some View {
-        VStack(spacing: 12) {
+        StudioPanel("Tạo bản dựng", icon: "arrow.down.doc") {
             if !api.canMakeCache {
-                HStack(spacing: 8) {
-                    Image(systemName: "lock.shield.fill")
-                        .font(.system(size: 16))
-                        .foregroundColor(.red)
-                    Text("Tính năng tạo Cache miễn phí hiện đang tạm đóng bởi Quản trị viên! Vui lòng nâng cấp VIP hoặc liên hệ Admin.")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(.red)
-                }
-                .padding(10)
-                .frame(maxWidth: .infinity)
-                .background(Color.red.opacity(0.12))
-                .cornerRadius(10)
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.red.opacity(0.3), lineWidth: 1))
+                Label("Free Cache đang tạm đóng. Liên hệ Admin để được hỗ trợ.", systemImage: "lock")
+                    .font(.subheadline).foregroundColor(.orange)
             }
-            
-            Button(action: {
-                buildAndExportCache()
-            }) {
-                HStack(spacing: 10) {
-                    if isProcessing {
-                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        Text("BUILDING FILE...")
-                            .font(.system(size: 15, weight: .black))
-                    } else {
-                        Image(systemName: "crown.fill")
-                            .font(.system(size: 17, weight: .bold))
-                            .foregroundColor(.yellow)
-                        Text("BUILD FILE (PRE)")
-                            .font(.system(size: 15, weight: .black))
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(
-                    LinearGradient(
-                        colors: [Color(red: 0.0, green: 0.85, blue: 1.0), Color(red: 0.6, green: 0.2, blue: 1.0)],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
-                .foregroundColor(.white)
-                .cornerRadius(16)
-                .shadow(color: Color.cyan.opacity(0.4), radius: 10, y: 5)
-            }
-            .disabled(isProcessing)
-            
-            Button(action: {
-                injectCacheToGame()
-            }) {
-                HStack(spacing: 8) {
-                    Image(systemName: "arrow.down.doc.fill")
-                        .font(.system(size: 16))
-                    Text("CÀI ĐẶT FILE VÀO GAME (DOCUMENTS)")
-                        .font(.system(size: 13, weight: .bold))
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(Color.white.opacity(0.05))
-                .foregroundColor(theme.neonCyan)
-                .cornerRadius(14)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 14)
-                        .stroke(theme.neonCyan.opacity(0.4), lineWidth: 1.2)
-                )
-            }
-            .disabled(isProcessing)
-            
-            // Small guide tip
-            Text("💡 Gợi ý: Với TrollStore/Jailbreak, chọn 'Cài đặt file'. Với Scarlet/E-Sign, bấm 'Build File' rồi chọn 'Lưu vào Tệp'.")
-                .font(.system(size: 10))
-                .foregroundColor(theme.secondaryText.opacity(0.8))
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 10)
+            Button(action: buildAndExportCache) {
+                Label(isProcessing ? "Đang tạo bản dựng…" : "Tạo & xuất Cache", systemImage: "arrow.down.doc")
+            }.buttonStyle(StudioActionStyle()).disabled(isProcessing || !api.canMakeCache)
+            Button(action: injectCacheToGame) {
+                Label("Cài tệp vào game", systemImage: "square.and.arrow.down")
+            }.buttonStyle(StudioActionStyle(secondary: true)).disabled(isProcessing || !api.canMakeCache)
+            Text("Chọn xuất tệp để lưu hoặc chia sẻ. Cài trực tiếp cần thiết bị hỗ trợ truy cập thư mục game.")
+                .font(.caption).foregroundColor(theme.secondaryText)
         }
     }
-    
+
     // MARK: - Helper UI Builders
     private func presetBadgeColor(for id: String) -> Color {
         switch id {
@@ -802,10 +673,10 @@ public struct HitboxModView: View {
                     .font(.system(size: 12, weight: .black, design: .monospaced))
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
-                    .background(Color.cyan.opacity(0.15))
-                    .foregroundColor(.cyan)
+                    .background(theme.accentColor.opacity(0.15))
+                    .foregroundColor(theme.accentColor)
                     .clipShape(Capsule())
-                    .overlay(Capsule().stroke(Color.cyan.opacity(0.3), lineWidth: 1))
+                    .overlay(Capsule().stroke(theme.accentColor.opacity(0.3), lineWidth: 1))
             }
             
             HStack(spacing: 10) {
@@ -816,8 +687,8 @@ public struct HitboxModView: View {
                 }) {
                     Image(systemName: "minus")
                         .font(.caption2)
-                        .frame(width: 26, height: 26)
-                        .background(Color.white.opacity(0.08))
+                        .frame(width: 44, height: 44)
+                        .background(theme.primaryText.opacity(0.08))
                         .foregroundColor(theme.primaryText)
                         .clipShape(Circle())
                 }
@@ -829,7 +700,7 @@ public struct HitboxModView: View {
                         onChange($0)
                     }
                 ), in: range)
-                .accentColor(theme.neonCyan)
+                .accentColor(theme.accentColor)
                 
                 Button(action: {
                     let newVal = min(range.upperBound, value.wrappedValue + step)
@@ -838,8 +709,8 @@ public struct HitboxModView: View {
                 }) {
                     Image(systemName: "plus")
                         .font(.caption2)
-                        .frame(width: 26, height: 26)
-                        .background(Color.white.opacity(0.08))
+                        .frame(width: 44, height: 44)
+                        .background(theme.primaryText.opacity(0.08))
                         .foregroundColor(theme.primaryText)
                         .clipShape(Circle())
                 }
