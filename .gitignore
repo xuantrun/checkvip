@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+env/
+ENV/
+
+# Output folders
+cache mod_output/
+dv_mod_output/
+*.bak
+
+# Xcode & Apple
+.DS_Store
+build/
+DerivedData/
+*.xcuserstate
+project.xcworkspace/xcuserdata/
+*.xcuserdata/
+*.xcscmblueprint
+Payload/
+*.ipa
+*.xcarchive
+
+# Logs & Database
+*.log
+*.db
+app_studio.db
