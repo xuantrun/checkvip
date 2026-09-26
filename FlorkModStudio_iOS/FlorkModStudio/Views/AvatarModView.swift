@@ -441,7 +441,7 @@ public struct AvatarModView: View {
                 
                 Text(preset.title)
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundColor(isSelected ? .white : theme.primaryText)
+                    .foregroundColor(theme.primaryText)
                     .lineLimit(1)
                 
                 Text(preset.subtitle)
@@ -617,7 +617,7 @@ public struct AvatarModView: View {
                     .frame(width: 8, height: 8)
                 Text(title)
                     .font(.system(size: 11, weight: .semibold))
-                    .foregroundColor(.white)
+                    .foregroundColor(theme.primaryText)
                 Spacer()
                 Text(String(format: "%+.4f", value.wrappedValue))
                     .font(.system(size: 12, weight: .black, design: .monospaced))
@@ -662,7 +662,7 @@ public struct AvatarModView: View {
                 .padding(.horizontal, 6)
                 .padding(.vertical, 5)
                 .background(isMatch ? theme.accentColor : theme.primaryText.opacity(0.06))
-                .foregroundColor(isMatch ? .black : .white)
+                .foregroundColor(isMatch ? theme.onAccent : theme.primaryText)
                 .cornerRadius(6)
         }
     }
@@ -682,7 +682,7 @@ public struct AvatarModView: View {
                         .foregroundColor(.gray)
                     TextField("bone_Head", text: $targetBone)
                         .font(.system(size: 12, weight: .bold, design: .monospaced))
-                        .foregroundColor(.white)
+                        .foregroundColor(theme.primaryText)
                         .padding(8)
                         .background(theme.primaryText.opacity(0.06))
                         .cornerRadius(8)
@@ -707,7 +707,7 @@ public struct AvatarModView: View {
                 HStack {
                     Text("Hệ Số Phóng To Hitbox (Scale)")
                         .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(theme.primaryText)
                     Spacer()
                     Text(String(format: "%.2fx", scaleVal))
                         .font(.system(size: 13, weight: .black, design: .monospaced))
@@ -725,7 +725,7 @@ public struct AvatarModView: View {
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
                                 .background(abs(scaleVal - quickVal) < 0.01 ? theme.accentColor : theme.primaryText.opacity(0.08))
-                                .foregroundColor(abs(scaleVal - quickVal) < 0.01 ? .black : .white)
+                                .foregroundColor(abs(scaleVal - quickVal) < 0.01 ? theme.onAccent : theme.primaryText)
                                 .cornerRadius(6)
                         }
                     }
@@ -737,14 +737,14 @@ public struct AvatarModView: View {
                 Toggle(isOn: $modMale) {
                     Text("Nam (BaseBoneMale)")
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundColor(theme.primaryText)
                 }
                 .toggleStyle(SwitchToggleStyle(tint: .cyan))
                 
                 Toggle(isOn: $modFemale) {
                     Text("Nữ (BaseBoneFemale)")
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundColor(theme.primaryText)
                 }
                 .toggleStyle(SwitchToggleStyle(tint: .cyan))
             }
@@ -809,7 +809,7 @@ public struct AvatarModView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Chuẩn Hóa Header & Zero-Padding 46,096 Bytes")
                             .font(.system(size: 11.5, weight: .bold))
-                            .foregroundColor(.white)
+                            .foregroundColor(theme.primaryText)
                         Text("Auto-unobfuscate 2018.4.12f1 -> 2022.3.47f1 khi mod, re-spoof về 2018.4.12f1 và đệm byte 0x00 chuẩn 46,096 bytes")
                             .font(.system(size: 12))
                             .foregroundColor(.gray)
@@ -823,7 +823,7 @@ public struct AvatarModView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Vá MonoScript Assembly (.dll)")
                             .font(.system(size: 11.5, weight: .bold))
-                            .foregroundColor(.white)
+                            .foregroundColor(theme.primaryText)
                         Text("Đồng bộ Assembly-CSharp.dll tương thích môi trường runtime iOS")
                             .font(.system(size: 12))
                             .foregroundColor(.gray)
@@ -853,7 +853,7 @@ public struct AvatarModView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(customFileName ?? "assetindexer.U6Zffc4YIR3DslNj3cXvYGAqz58~3D")
                         .font(.system(size: 11, weight: .bold, design: .monospaced))
-                        .foregroundColor(.white)
+                        .foregroundColor(theme.primaryText)
                         .lineLimit(1)
                     
                     Text(customFileData != nil ? "File tùy chỉnh từ máy (\(customFileData!.count) bytes)" : "File gốc mặc định trên máy chủ VPS (46,096 bytes)")

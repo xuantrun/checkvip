@@ -170,7 +170,7 @@ public struct LoginView: View {
                                     endPoint: .trailing
                                 )
                             )
-                            .foregroundColor(theme.currentTheme == .monochrome ? .black : .white)
+                            .foregroundColor(theme.onAccent)
                             .cornerRadius(20)
                             .shadow(color: Color.cyan.opacity(0.3), radius: 10, y: 4)
                         }

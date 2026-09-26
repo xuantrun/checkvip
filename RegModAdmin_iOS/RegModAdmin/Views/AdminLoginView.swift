@@ -90,7 +90,7 @@ public struct AdminLoginView: View {
                                 }
                                 Text(api.isLoading ? "Đang xác thực…" : "Vào trang quản trị")
                                     .font(.system(size: 15, weight: .bold))
-                                    .foregroundColor(theme.primaryText)
+                                    .foregroundColor(theme.onAccent)
                             }
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 15)
@@ -102,7 +102,7 @@ public struct AdminLoginView: View {
                                 )
                             )
                             .cornerRadius(20)
-                            .shadow(color: Color.red.opacity(0.4), radius: 10, y: 4)
+                            .shadow(color: theme.accentColor.opacity(0.1), radius: 10, y: 4)
                         }
                         .disabled(api.isLoading || password.isEmpty)
                         
